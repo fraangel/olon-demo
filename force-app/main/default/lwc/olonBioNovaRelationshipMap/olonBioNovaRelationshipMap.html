@@ -1,0 +1,77 @@
+<template>
+    <lightning-card title="Buyer Relationship Map" icon-name="standard:account">
+        <div class="map-container slds-p-around_medium">
+            <!-- SVG overlay for connection lines -->
+            <svg class="svg-overlay" lwc:dom="manual"></svg>
+
+            <!-- Root Account Node -->
+            <div class="root-level slds-grid slds-grid_align-center">
+                <div class="account-node root-node" data-id={rootAccount.id}>
+                    <div class="node-content slds-grid slds-grid_vertical-align-center">
+                        <lightning-icon
+                            icon-name={rootAccount.iconName}
+                            size="medium"
+                            class="slds-m-right_small"
+                        ></lightning-icon>
+                        <div>
+                            <p class="node-name slds-text-heading_small">
+                                <strong>{rootAccount.name}</strong>
+                            </p>
+                            <p class="node-detail slds-text-body_small slds-m-top_xxx-small">
+                                {rootAccount.location}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Subsidiary Level -->
+            <div class="sub-level slds-grid slds-grid_align-spread slds-p-top_large">
+                <template for:each={subsidiaries} for:item="subsidiary">
+                    <div key={subsidiary.id} class="subsidiary-column slds-col">
+                        <!-- Subsidiary Account Node -->
+                        <div class="account-node" data-id={subsidiary.id}>
+                            <div class="node-content slds-grid slds-grid_vertical-align-center">
+                                <lightning-icon
+                                    icon-name={subsidiary.iconName}
+                                    size="small"
+                                    class="slds-m-right_x-small"
+                                ></lightning-icon>
+                                <div>
+                                    <p class="node-name slds-text-body_regular">
+                                        <strong>{subsidiary.name}</strong>
+                                    </p>
+                                    <p class="node-detail slds-text-body_small slds-m-top_xxx-small">
+                                        {subsidiary.location}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Contact Node -->
+                        <div class={subsidiary.contact.sentimentClass} data-id={subsidiary.contact.id}>
+                            <div class="node-content slds-grid slds-grid_vertical-align-center">
+                                <lightning-icon
+                                    icon-name={subsidiary.contact.iconName}
+                                    size="small"
+                                    class="slds-m-right_x-small"
+                                ></lightning-icon>
+                                <div>
+                                    <p class="node-name slds-text-body_regular">
+                                        {subsidiary.contact.name}
+                                    </p>
+                                    <p class="node-detail slds-text-body_small slds-m-top_xxx-small">
+                                        {subsidiary.contact.title}
+                                    </p>
+                                    <p class="sentiment-badge slds-m-top_xxx-small">
+                                        {subsidiary.contact.sentimentLabel}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </lightning-card>
+</template>

@@ -1,0 +1,12 @@
+/* Minimal CSS - Standard SLDS Only */
+/* Only footer link styling needed */
+
+a {
+    color: #0070d2;
+    text-decoration: none;
+    font-size: 0.8125rem;
+}
+
+a:hover {
+    text-decoration: underline;
+}

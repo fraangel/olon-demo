@@ -1,0 +1,61 @@
+<template>
+    <lightning-card variant="Narrow" title="Active Documentation & Sample Requests" icon-name="standard:document_reference">
+        <!-- Header Actions -->
+        <div slot="actions">
+            <lightning-button-icon
+                icon-name="utility:refresh"
+                variant="border-filled"
+                alternative-text="Refresh"
+                onclick={handleRefresh}
+                class="slds-m-right_x-small">
+            </lightning-button-icon>
+            <lightning-button
+                label="New Request"
+                variant="neutral"
+                onclick={handleNewRequest}>
+            </lightning-button>
+        </div>
+
+        <!-- Metadata Row -->
+        <div class="slds-p-left_medium slds-p-bottom_x-small slds-text-body_small slds-text-color_weak">
+            {totalRequests} &bull; Updated {lastUpdatedTime}
+        </div>
+
+        <!-- Filter Row -->
+        <div class="slds-p-around_small slds-border_top">
+            <lightning-input
+                type="search"
+                variant="label-hidden"
+                placeholder="Filter by Account or Doc Type..."
+                onchange={handleSearch}>
+            </lightning-input>
+        </div>
+
+        <!-- Datatable -->
+        <div class="slds-border_top">
+            <template lwc:if={hasRequests}>
+                <lightning-datatable
+                    key-field="id"
+                    data={filteredRequests}
+                    columns={columns}
+                    hide-checkbox-column
+                    onrowaction={handleRowAction}>
+                </lightning-datatable>
+            </template>
+
+            <!-- Empty state -->
+            <template lwc:else>
+                <div class="slds-align_absolute-center slds-p-around_medium">
+                    <p class="slds-text-body_regular slds-text-color_weak">
+                        No requests found matching your filter.
+                    </p>
+                </div>
+            </template>
+        </div>
+
+        <!-- Footer -->
+        <div slot="footer">
+            <a href="javascript:void(0);" onclick={handleViewAll} class="slds-align_absolute-center">View All Requests</a>
+        </div>
+    </lightning-card>
+</template>

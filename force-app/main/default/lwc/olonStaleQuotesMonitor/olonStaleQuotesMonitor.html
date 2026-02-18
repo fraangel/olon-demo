@@ -1,0 +1,61 @@
+<template>
+    <lightning-card variant="Narrow" title="Stale Quotes Monitor (>60 Days)" icon-name="standard:quotes">
+        <!-- Header Actions -->
+        <div slot="actions">
+            <lightning-button-icon
+                icon-name="utility:refresh"
+                variant="border-filled"
+                alternative-text="Refresh"
+                onclick={handleRefresh}
+                class="slds-m-right_x-small">
+            </lightning-button-icon>
+            <lightning-button
+                label="View Report"
+                variant="neutral"
+                onclick={handleViewReport}>
+            </lightning-button>
+        </div>
+
+        <!-- Metadata Row -->
+        <div class="slds-p-left_medium slds-p-bottom_x-small slds-text-body_small slds-text-color_weak">
+            {itemsLabel} &bull; Updated {lastUpdatedTime}
+        </div>
+
+        <!-- Search Filter Row -->
+        <div class="slds-p-around_small slds-border_top">
+            <lightning-input
+                type="search"
+                variant="label-hidden"
+                placeholder="Search accounts..."
+                onchange={handleSearch}>
+            </lightning-input>
+        </div>
+
+        <!-- Datatable -->
+        <div class="slds-border_top">
+            <template lwc:if={hasQuotes}>
+                <lightning-datatable
+                    key-field="id"
+                    data={filteredQuotes}
+                    columns={columns}
+                    hide-checkbox-column
+                    onrowaction={handleRowAction}>
+                </lightning-datatable>
+            </template>
+
+            <!-- Empty state -->
+            <template lwc:else>
+                <div class="slds-align_absolute-center slds-p-around_medium">
+                    <p class="slds-text-body_regular slds-text-color_weak">
+                        No stale quotes found matching your search.
+                    </p>
+                </div>
+            </template>
+        </div>
+
+        <!-- Footer: View All -->
+        <div slot="footer">
+            <a href="javascript:void(0);" onclick={handleViewAll} class="slds-align_absolute-center">View All</a>
+        </div>
+    </lightning-card>
+</template>

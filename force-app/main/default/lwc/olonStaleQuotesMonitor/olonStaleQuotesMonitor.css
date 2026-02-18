@@ -1,0 +1,18 @@
+/* ==================== Native Related List Styling ==================== */
+
+/* Footer: View All link */
+:host ::slotted([slot="footer"]) {
+    text-align: center;
+    display: block;
+}
+
+/* Ensure View All link styling */
+a {
+    color: #0070d2;
+    text-decoration: none;
+    font-size: 0.8125rem;
+}
+
+a:hover {
+    text-decoration: underline;
+}

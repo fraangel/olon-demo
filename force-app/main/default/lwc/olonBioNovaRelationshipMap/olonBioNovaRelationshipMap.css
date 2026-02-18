@@ -1,0 +1,132 @@
+:host {
+    --sentiment-positive: #2e844a;
+    --sentiment-neutral: #dd7a01;
+    --sentiment-negative: #c23934;
+    --node-bg: #ffffff;
+    --node-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Main container */
+.map-container {
+    position: relative;
+    min-height: 400px;
+    padding: 1.5rem;
+}
+
+/* SVG overlay for connection lines */
+.svg-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Shared node card styling */
+.account-node,
+.contact-node {
+    position: relative;
+    z-index: 1;
+    background: var(--node-bg);
+    border-radius: 0.75rem;
+    box-shadow: var(--node-shadow);
+    padding: 0.75rem 1rem;
+    border: 2px solid #d8dde6;
+    max-width: 260px;
+    margin: 0 auto;
+}
+
+/* Root account node */
+.root-node {
+    max-width: 320px;
+    border-color: #0176d3;
+    border-width: 2px;
+}
+
+.node-content {
+    gap: 0.5rem;
+}
+
+.node-name {
+    margin: 0;
+    color: #181818;
+}
+
+.node-detail {
+    margin: 0;
+    color: #706e6b;
+}
+
+/* Sentiment border colors on contact nodes */
+.sentiment-positive {
+    border-color: var(--sentiment-positive);
+    border-width: 2px;
+    border-left-width: 4px;
+}
+
+.sentiment-neutral {
+    border-color: var(--sentiment-neutral);
+    border-width: 2px;
+    border-left-width: 4px;
+}
+
+.sentiment-negative {
+    border-color: var(--sentiment-negative);
+    border-width: 2px;
+    border-left-width: 4px;
+}
+
+/* Sentiment badge label */
+.sentiment-badge {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin: 0;
+    letter-spacing: 0.5px;
+}
+
+.sentiment-positive .sentiment-badge {
+    color: var(--sentiment-positive);
+}
+
+.sentiment-neutral .sentiment-badge {
+    color: var(--sentiment-neutral);
+}
+
+.sentiment-negative .sentiment-badge {
+    color: var(--sentiment-negative);
+}
+
+/* Layout: root level centered */
+.root-level {
+    margin-bottom: 1rem;
+}
+
+/* Layout: subsidiary columns */
+.sub-level {
+    gap: 1.5rem;
+}
+
+.subsidiary-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    flex: 1;
+    min-width: 200px;
+}
+
+/* Responsive: stack on narrow viewports */
+@media (max-width: 768px) {
+    .sub-level {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .subsidiary-column {
+        width: 100%;
+        max-width: 300px;
+    }
+}
