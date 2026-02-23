@@ -53,3 +53,24 @@
     color: #e65100;
     border: 1px solid #ffb74d;
 }
+
+/* ── Green Chemistry label ───────────────────────────────────────────────── */
+.olon-green-label {
+    color: #2e7d32;
+    font-weight: 600;
+    vertical-align: middle;
+}
+
+/* ── Responsive action area ──────────────────────────────────────────────── */
+
+/* Desktop (768px+): show button row, hide dropdown menu */
+@media (min-width: 768px) {
+    .action-buttons-desktop { display: block; }
+    .action-menu-mobile     { display: none;  }
+}
+
+/* Mobile (<768px): hide button row, show dropdown menu */
+@media (max-width: 767px) {
+    .action-buttons-desktop { display: none;  }
+    .action-menu-mobile     { display: block; }
+}

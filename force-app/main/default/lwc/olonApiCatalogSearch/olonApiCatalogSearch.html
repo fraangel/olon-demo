@@ -100,8 +100,24 @@
                                 {product.area}
                             </p>
 
+                            <!-- Green Chemistry indicator -->
+                            <div
+                                if:true={product.greenChemistry}
+                                class="slds-m-bottom_small"
+                            >
+                                <lightning-icon
+                                    icon-name="utility:animal_and_nature"
+                                    variant="success"
+                                    size="xx-small"
+                                    class="slds-m-right_xx-small"
+                                ></lightning-icon>
+                                <span class="slds-text-body_small olon-green-label">
+                                    Green Chemistry
+                                </span>
+                            </div>
+
                             <!-- Regulatory status badges -->
-                            <div class="slds-grid slds-wrap slds-m-bottom_medium">
+                            <div class="slds-grid slds-wrap slds-m-bottom_small">
                                 <template for:each={product.regulatoryBadges} for:item="badge">
                                     <span key={badge.key} class={badge.badgeClass}>
                                         {badge.label}
@@ -109,14 +125,80 @@
                                 </template>
                             </div>
 
-                            <!-- Request Documents CTA -->
-                            <lightning-button
-                                label="Request Documents"
-                                variant="brand"
-                                data-id={product.id}
-                                data-name={product.name}
-                                onclick={handleDocRequest}
-                            ></lightning-button>
+                            <!-- ── DESKTOP ACTIONS ─────────────────────── -->
+                            <div class="action-buttons-desktop slds-m-top_small">
+                                <div class="slds-grid slds-wrap">
+                                    <lightning-button
+                                        label="Request Sample"
+                                        variant="neutral"
+                                        icon-name="utility:package"
+                                        data-id={product.id}
+                                        data-name={product.name}
+                                        onclick={handleSampleRequest}
+                                        class="slds-m-right_xx-small slds-m-bottom_xx-small"
+                                    ></lightning-button>
+                                    <lightning-button
+                                        label="Tech Call"
+                                        variant={product.techCallVariant}
+                                        icon-name="utility:video"
+                                        data-id={product.id}
+                                        data-name={product.name}
+                                        onclick={handleMeetingRequest}
+                                        class="slds-m-right_xx-small slds-m-bottom_xx-small"
+                                    ></lightning-button>
+                                    <lightning-button
+                                        label="ESG Info"
+                                        variant="neutral"
+                                        icon-name="utility:world"
+                                        data-id={product.id}
+                                        data-name={product.name}
+                                        onclick={handleEsgRequest}
+                                        class="slds-m-bottom_xx-small"
+                                    ></lightning-button>
+                                </div>
+                                <lightning-button
+                                    label="Request Documents"
+                                    variant="brand"
+                                    data-id={product.id}
+                                    data-name={product.name}
+                                    onclick={handleDocRequest}
+                                    class="slds-m-top_xx-small"
+                                ></lightning-button>
+                            </div>
+
+                            <!-- ── MOBILE ACTIONS ──────────────────────── -->
+                            <div class="action-menu-mobile slds-m-top_small">
+                                <lightning-button-menu
+                                    alternative-text="Actions"
+                                    label="Actions"
+                                    menu-alignment="auto"
+                                    data-id={product.id}
+                                    data-name={product.name}
+                                    onselect={handleActionMenuSelect}
+                                >
+                                    <lightning-menu-item
+                                        value="samplerequest"
+                                        label="Request Sample"
+                                        icon-name="utility:package"
+                                    ></lightning-menu-item>
+                                    <lightning-menu-item
+                                        value="meetingrequest"
+                                        label="Tech Call"
+                                        icon-name="utility:video"
+                                    ></lightning-menu-item>
+                                    <lightning-menu-item
+                                        value="esgrequest"
+                                        label="ESG Info"
+                                        icon-name="utility:world"
+                                    ></lightning-menu-item>
+                                    <lightning-menu-divider></lightning-menu-divider>
+                                    <lightning-menu-item
+                                        value="docrequest"
+                                        label="Request Documents"
+                                        icon-name="utility:file"
+                                    ></lightning-menu-item>
+                                </lightning-button-menu>
+                            </div>
 
                         </div>
                     </div>

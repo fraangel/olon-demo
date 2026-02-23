@@ -10,7 +10,8 @@ const PRODUCTS = [
         category: 'Peptides',
         site: 'Rodano',
         regulatory: ['US DMF', 'CEP'],
-        area: 'Oncology'
+        area: 'Oncology',
+        greenChemistry: true
     },
     {
         id: 'prod-002',
@@ -19,7 +20,8 @@ const PRODUCTS = [
         category: 'HPAPI',
         site: 'Rodano',
         regulatory: ['US DMF'],
-        area: 'Neurology'
+        area: 'Neurology',
+        greenChemistry: false
     },
     {
         id: 'prod-003',
@@ -28,7 +30,8 @@ const PRODUCTS = [
         category: 'Generic',
         site: 'Capua',
         regulatory: ['None'],
-        area: 'Cardiology'
+        area: 'Cardiology',
+        greenChemistry: false
     },
     {
         id: 'prod-004',
@@ -37,7 +40,8 @@ const PRODUCTS = [
         category: 'Peptides',
         site: 'Lodi',
         regulatory: ['CEP'],
-        area: 'Endocrinology'
+        area: 'Endocrinology',
+        greenChemistry: false
     },
     {
         id: 'prod-005',
@@ -46,7 +50,8 @@ const PRODUCTS = [
         category: 'HPAPI',
         site: 'Rodano',
         regulatory: ['US DMF', 'CEP', 'JP DMF'],
-        area: 'Oncology'
+        area: 'Oncology',
+        greenChemistry: true
     },
     {
         id: 'prod-006',
@@ -55,7 +60,8 @@ const PRODUCTS = [
         category: 'Generic',
         site: 'Capua',
         regulatory: ['US DMF'],
-        area: 'Pulmonology'
+        area: 'Pulmonology',
+        greenChemistry: false
     }
 ];
 
@@ -106,6 +112,7 @@ export default class OlonApiCatalogSearch extends LightningElement {
                     p.site === 'Rodano'
                         ? 'olon-site-badge olon-site-badge_rodano'
                         : 'olon-site-badge',
+                techCallVariant: p.site === 'Rodano' ? 'brand' : 'neutral',
                 regulatoryBadges: p.regulatory.map((r) => ({
                     key: r,
                     label: r,
@@ -171,12 +178,57 @@ export default class OlonApiCatalogSearch extends LightningElement {
         this._selectedSites = [];
     }
 
-    // ── Card interaction ───────────────────────────────────────────────────
+    // ── Card interactions ──────────────────────────────────────────────────
 
     handleDocRequest(event) {
         const { id, name } = event.currentTarget.dataset;
         this.dispatchEvent(
             new CustomEvent('docrequest', {
+                detail: { productId: id, productName: name },
+                bubbles: true,
+                composed: true
+            })
+        );
+    }
+
+    handleSampleRequest(event) {
+        const { id, name } = event.currentTarget.dataset;
+        this.dispatchEvent(
+            new CustomEvent('samplerequest', {
+                detail: { productId: id, productName: name },
+                bubbles: true,
+                composed: true
+            })
+        );
+    }
+
+    handleMeetingRequest(event) {
+        const { id, name } = event.currentTarget.dataset;
+        this.dispatchEvent(
+            new CustomEvent('meetingrequest', {
+                detail: { productId: id, productName: name },
+                bubbles: true,
+                composed: true
+            })
+        );
+    }
+
+    handleEsgRequest(event) {
+        const { id, name } = event.currentTarget.dataset;
+        this.dispatchEvent(
+            new CustomEvent('esgrequest', {
+                detail: { productId: id, productName: name },
+                bubbles: true,
+                composed: true
+            })
+        );
+    }
+
+    handleActionMenuSelect(event) {
+        const eventType = event.detail.value;
+        const { id, name } = event.currentTarget.dataset;
+        this.dispatchEvent(
+            new CustomEvent(eventType, {
                 detail: { productId: id, productName: name },
                 bubbles: true,
                 composed: true
