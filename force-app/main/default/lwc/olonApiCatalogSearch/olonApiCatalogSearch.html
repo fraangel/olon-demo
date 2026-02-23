@@ -1,0 +1,160 @@
+<template>
+    <lightning-card title={catalogTitle} icon-name="standard:product">
+
+        <!-- ── HEADER ACTIONS: result count + clear ──────────────────────── -->
+        <div slot="actions" class="slds-grid slds-grid_vertical-align-center">
+            <span class="slds-text-body_small slds-text-color_weak slds-m-right_small">
+                {resultCount} products
+            </span>
+            <lightning-button
+                label="Clear Filters"
+                variant="neutral"
+                icon-name="utility:clear"
+                onclick={handleClearFilters}
+            ></lightning-button>
+        </div>
+
+        <div class="slds-p-around_medium">
+
+            <!-- ── SEARCH BAR ────────────────────────────────────────────── -->
+            <lightning-input
+                type="search"
+                label="Search"
+                variant="label-hidden"
+                placeholder="Search by name, CAS number, or therapeutic area..."
+                value={_searchTerm}
+                onchange={handleSearchChange}
+            ></lightning-input>
+
+            <!-- ── CATEGORY FILTERS ──────────────────────────────────────── -->
+            <div class="slds-grid slds-grid_vertical-align-center slds-wrap slds-m-top_small">
+                <span class="slds-text-body_small slds-text-color_weak slds-m-right_small">
+                    Category:
+                </span>
+                <template for:each={categoryFilters} for:item="f">
+                    <lightning-button
+                        key={f.label}
+                        label={f.label}
+                        variant={f.variant}
+                        data-filter={f.label}
+                        onclick={handleCategoryToggle}
+                        class="slds-m-right_xx-small slds-m-bottom_xx-small"
+                    ></lightning-button>
+                </template>
+            </div>
+
+            <!-- ── SITE FILTERS (configurable via @api hideSiteFilters) ──── -->
+            <div
+                if:false={hideSiteFilters}
+                class="slds-grid slds-grid_vertical-align-center slds-wrap slds-m-top_xx-small"
+            >
+                <span class="slds-text-body_small slds-text-color_weak slds-m-right_small">
+                    Site:
+                </span>
+                <template for:each={siteFilters} for:item="f">
+                    <lightning-button
+                        key={f.label}
+                        label={f.label}
+                        variant={f.variant}
+                        data-filter={f.label}
+                        onclick={handleSiteToggle}
+                        class="slds-m-right_xx-small slds-m-bottom_xx-small"
+                    ></lightning-button>
+                </template>
+            </div>
+
+            <!-- ── PRODUCT GRID ──────────────────────────────────────────── -->
+            <div if:true={hasResults} class="slds-grid slds-wrap slds-m-top_medium">
+                <template for:each={filteredProducts} for:item="product">
+                    <div
+                        key={product.id}
+                        class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-3 slds-p-around_x-small"
+                    >
+                        <div class="slds-box slds-theme_default product-card">
+
+                            <!-- Site badge + Category label -->
+                            <div class="slds-grid slds-grid_align-spread slds-m-bottom_x-small">
+                                <span class={product.siteClass}>{product.site}</span>
+                                <span class="slds-text-body_small slds-text-color_weak">
+                                    {product.category}
+                                </span>
+                            </div>
+
+                            <!-- Molecule name -->
+                            <h3 class="slds-text-heading_small slds-m-bottom_xxx-small">
+                                {product.name}
+                            </h3>
+
+                            <!-- CAS number -->
+                            <p class="slds-text-body_small slds-text-color_weak slds-m-bottom_small">
+                                CAS: {product.cas}
+                            </p>
+
+                            <!-- Therapeutic area -->
+                            <p class="slds-text-body_small slds-m-bottom_small">
+                                <lightning-icon
+                                    icon-name="utility:activity"
+                                    size="xx-small"
+                                    class="slds-m-right_xx-small"
+                                ></lightning-icon>
+                                {product.area}
+                            </p>
+
+                            <!-- Regulatory status badges -->
+                            <div class="slds-grid slds-wrap slds-m-bottom_medium">
+                                <template for:each={product.regulatoryBadges} for:item="badge">
+                                    <span key={badge.key} class={badge.badgeClass}>
+                                        {badge.label}
+                                    </span>
+                                </template>
+                            </div>
+
+                            <!-- Request Documents CTA -->
+                            <lightning-button
+                                label="Request Documents"
+                                variant="brand"
+                                data-id={product.id}
+                                data-name={product.name}
+                                onclick={handleDocRequest}
+                            ></lightning-button>
+
+                        </div>
+                    </div>
+                </template>
+            </div>
+
+            <!-- ── EMPTY STATE ───────────────────────────────────────────── -->
+            <div
+                if:false={hasResults}
+                class="slds-p-around_large slds-text-align_center"
+            >
+                <lightning-icon
+                    icon-name="utility:search"
+                    size="large"
+                    class="slds-m-bottom_small"
+                ></lightning-icon>
+                <p class="slds-text-heading_small slds-m-bottom_xx-small">
+                    No products found
+                </p>
+                <p class="slds-text-body_small slds-text-color_weak">
+                    Try adjusting your search terms or clearing the active filters.
+                </p>
+            </div>
+
+        </div>
+
+        <!-- ── FOOTER: CDA Disclaimer ────────────────────────────────────── -->
+        <div slot="footer">
+            <p class="slds-text-body_small slds-text-color_weak">
+                <lightning-icon
+                    icon-name="utility:lock"
+                    size="xx-small"
+                    class="slds-m-right_xx-small"
+                ></lightning-icon>
+                Product information is confidential and subject to applicable CDA/NDA terms.
+                Access is restricted to authorized personnel under active Supply Agreements.
+            </p>
+        </div>
+
+    </lightning-card>
+</template>

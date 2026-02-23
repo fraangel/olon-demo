@@ -1,0 +1,55 @@
+/* ── Product card: equal height in grid, CTA pinned to bottom ────────────── */
+.product-card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* ── Regulatory status badges ────────────────────────────────────────────── */
+.olon-badge {
+    display: inline-block;
+    padding: 0.125rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    margin-right: 4px;
+    margin-bottom: 4px;
+    line-height: 1.5;
+}
+
+/* Green: US DMF / JP DMF — active regulatory filing */
+.olon-badge_dmf {
+    background-color: #2e7d32;
+    color: #ffffff;
+}
+
+/* Blue: CEP — European Pharmacopoeia certificate available */
+.olon-badge_cep {
+    background-color: #0176d3;
+    color: #ffffff;
+}
+
+/* Gray: no active filing */
+.olon-badge_none {
+    background-color: #ecebea;
+    color: #444444;
+}
+
+/* ── Manufacturing site badges ───────────────────────────────────────────── */
+.olon-site-badge {
+    display: inline-block;
+    padding: 0.125rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    background-color: #ecebea;
+    color: #444444;
+}
+
+/* Rodano: key technological site for HPAPI and Peptides — orange highlight */
+.olon-site-badge_rodano {
+    background-color: #fff3e0;
+    color: #e65100;
+    border: 1px solid #ffb74d;
+}

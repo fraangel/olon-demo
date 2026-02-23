@@ -35,6 +35,21 @@ A guided 4-step wizard for submitting regulated technical documentation requests
 - **Submit Flow**: 2-second loading spinner simulating server-side save, followed by a success screen displaying the generated request ID (`REQ-2026-084`)
 - **CDA Disclaimer**: Persistent footer on all steps reminding users of mandatory Confidentiality Agreement terms
 
+### 5. API Product Catalog Search
+**`olonApiCatalogSearch`**
+
+Advanced pharmaceutical product catalog for Olon's Customer Community. Enables technical buyers to search and filter API/CDMO molecules with real-time filtering and regulatory status visualization.
+
+- **Real-time search**: Full-text search across molecule name, CAS number, and therapeutic area
+- **Category filters**: Toggle buttons for HPAPI, Peptides, and Generic categories (multi-select)
+- **Site filters**: Toggle buttons for manufacturing sites — Rodano (highlighted in orange as key HPAPI/Peptides site), Lodi, Capua
+- **Product cards**: Responsive grid (1 col mobile / 2 col tablet / 3 col desktop) with regulatory status badges
+- **Regulatory badges**: Color-coded — green for US/JP DMF Active, blue for CEP Available, gray for no filing
+- **Request Documents**: Each card fires a `docrequest` custom event with `productId` and `productName`
+- **Configurable**: `catalogTitle` and `hideSiteFilters` properties editable in Lightning App Builder
+- **Empty state**: Friendly no-results panel when search/filters return zero products
+- **CDA footer**: Confidentiality reminder on all views
+
 ## Project Structure
 
 ```
@@ -42,6 +57,7 @@ force-app/
   main/
     default/
       lwc/
+        olonApiCatalogSearch/          # API Product Catalog Search
         olonBioNovaRelationshipMap/    # Buyer Relationship Map
         olonDocRequestMockData/        # Mock data for Document Request Monitor
         olonDocRequestMonitor/         # Document Request Monitor
