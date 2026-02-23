@@ -1,0 +1,301 @@
+<template>
+    <lightning-card
+        title="Documentation Request Wizard"
+        icon-name="standard:document"
+    >
+        <!-- ── SPINNER (submission in progress) ──────────────────────────── -->
+        <div
+            if:true={isSubmitting}
+            class="slds-is-relative"
+            style="min-height: 200px;"
+        >
+            <lightning-spinner
+                alternative-text="Submitting your request, please wait..."
+                size="medium"
+            ></lightning-spinner>
+        </div>
+
+        <!-- ── SUCCESS SCREEN ────────────────────────────────────────────── -->
+        <div
+            if:true={isSuccess}
+            class="slds-p-around_large slds-text-align_center"
+        >
+            <lightning-icon
+                icon-name="utility:success"
+                variant="success"
+                size="large"
+                class="slds-m-bottom_medium"
+            ></lightning-icon>
+            <h2 class="slds-text-heading_medium slds-m-bottom_small">
+                Request Successfully Created
+            </h2>
+            <p class="slds-text-body_regular slds-text-color_weak slds-m-bottom_large">
+                {successMessage}
+            </p>
+            <lightning-button
+                label="Submit Another Request"
+                variant="neutral"
+                onclick={handleReset}
+            ></lightning-button>
+        </div>
+
+        <!-- ── WIZARD BODY ────────────────────────────────────────────────── -->
+        <div if:true={isWizardVisible}>
+
+            <!-- Progress Indicator -->
+            <div class="slds-p-horizontal_medium slds-p-top_medium">
+                <lightning-progress-indicator
+                    current-step={currentStepValue}
+                    type="base"
+                    has-error="false"
+                >
+                    <lightning-progress-step
+                        label="Molecule"
+                        value="step1"
+                    ></lightning-progress-step>
+                    <lightning-progress-step
+                        label="Documents"
+                        value="step2"
+                    ></lightning-progress-step>
+                    <lightning-progress-step
+                        label="Regulatory"
+                        value="step3"
+                    ></lightning-progress-step>
+                    <lightning-progress-step
+                        label="Review"
+                        value="step4"
+                    ></lightning-progress-step>
+                </lightning-progress-indicator>
+            </div>
+
+            <div class="slds-m-top_large">
+
+                <!-- ── STEP 1: Molecule Selection ─────────────────────────── -->
+                <div if:true={isStep1} class="slds-p-horizontal_medium slds-p-bottom_medium">
+                    <h3 class="slds-text-heading_small slds-m-bottom_medium">
+                        Select Active Molecule / API
+                    </h3>
+                    <lightning-combobox
+                        name="molecule"
+                        label="Molecule / API"
+                        placeholder="Select a molecule..."
+                        value={_formData.molecule}
+                        options={moleculeOptions}
+                        onchange={handleMoleculeChange}
+                        required
+                    ></lightning-combobox>
+                    <div class="slds-box slds-theme_shade slds-m-top_medium slds-p-around_small">
+                        <p class="slds-text-body_small slds-text-color_weak">
+                            <lightning-icon
+                                icon-name="utility:info"
+                                size="xx-small"
+                                class="slds-m-right_xx-small"
+                            ></lightning-icon>
+                            Select the active pharmaceutical ingredient (API) or molecule
+                            for which documentation is being requested. Only molecules
+                            covered under your active Supply Agreement are listed.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- ── STEP 2: Document Dossier ───────────────────────────── -->
+                <div if:true={isStep2} class="slds-p-horizontal_medium slds-p-bottom_medium">
+                    <h3 class="slds-text-heading_small slds-m-bottom_medium">
+                        Select Required Documents
+                    </h3>
+                    <template for:each={documentOptions} for:item="doc">
+                        <div
+                            key={doc.id}
+                            class="slds-grid slds-grid_vertical-align-center slds-box slds-m-bottom_small slds-p-around_small"
+                        >
+                            <div class="slds-col slds-no-flex slds-m-right_small">
+                                <lightning-icon
+                                    icon-name={doc.icon}
+                                    size="small"
+                                ></lightning-icon>
+                            </div>
+                            <div class="slds-col">
+                                <p class="slds-text-body_regular">
+                                    <strong>{doc.label}</strong>
+                                </p>
+                                <p class="slds-text-body_small slds-text-color_weak slds-m-top_xxx-small">
+                                    {doc.description}
+                                </p>
+                            </div>
+                            <div class="slds-col slds-no-flex slds-m-left_small">
+                                <lightning-input
+                                    type="checkbox"
+                                    label={doc.label}
+                                    variant="label-hidden"
+                                    name={doc.id}
+                                    data-id={doc.id}
+                                    checked={doc.checked}
+                                    onchange={handleDocumentChange}
+                                ></lightning-input>
+                            </div>
+                        </div>
+                    </template>
+                    <div class="slds-box slds-theme_shade slds-m-top_small slds-p-around_small">
+                        <p class="slds-text-body_small slds-text-color_weak">
+                            <lightning-icon
+                                icon-name="utility:info"
+                                size="xx-small"
+                                class="slds-m-right_xx-small"
+                            ></lightning-icon>
+                            Select one or more document types. Document availability is
+                            subject to regulatory filing status and applicable CDA terms.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- ── STEP 3: Regulatory Details ─────────────────────────── -->
+                <div if:true={isStep3} class="slds-p-horizontal_medium slds-p-bottom_medium">
+                    <h3 class="slds-text-heading_small slds-m-bottom_medium">
+                        Regulatory Information
+                    </h3>
+                    <lightning-combobox
+                        name="regulatoryMarket"
+                        label="Regulatory Market"
+                        placeholder="Select a market..."
+                        value={_formData.regulatoryMarket}
+                        options={regulatoryMarketOptions}
+                        onchange={handleRegulatoryMarketChange}
+                        required
+                        class="slds-m-bottom_medium"
+                    ></lightning-combobox>
+                    <lightning-input
+                        type="text"
+                        name="projectScope"
+                        label="Project Scope"
+                        placeholder="e.g. Phase II Clinical Trial, Commercial Launch, NDA Submission..."
+                        value={_formData.projectScope}
+                        onchange={handleProjectScopeChange}
+                        maxlength="255"
+                        required
+                    ></lightning-input>
+                    <div class="slds-box slds-theme_shade slds-m-top_medium slds-p-around_small">
+                        <p class="slds-text-body_small slds-text-color_weak">
+                            <lightning-icon
+                                icon-name="utility:info"
+                                size="xx-small"
+                                class="slds-m-right_xx-small"
+                            ></lightning-icon>
+                            Provide the target regulatory authority and a brief description
+                            of your project context. This information is used to route your
+                            request to the appropriate Regulatory Affairs team.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- ── STEP 4: Review ──────────────────────────────────────── -->
+                <div if:true={isStep4} class="slds-p-horizontal_medium slds-p-bottom_medium">
+                    <h3 class="slds-text-heading_small slds-m-bottom_medium">
+                        Review Your Request
+                    </h3>
+                    <div class="slds-box slds-p-around_medium slds-m-bottom_medium">
+                        <dl class="slds-dl_horizontal">
+                            <dt class="slds-dl_horizontal__label">
+                                <p class="slds-truncate slds-text-color_weak">
+                                    Molecule / API
+                                </p>
+                            </dt>
+                            <dd class="slds-dl_horizontal__detail">
+                                <p>{reviewMoleculeLabel}</p>
+                            </dd>
+
+                            <dt class="slds-dl_horizontal__label">
+                                <p class="slds-truncate slds-text-color_weak">
+                                    Documents Requested
+                                </p>
+                            </dt>
+                            <dd class="slds-dl_horizontal__detail">
+                                <p>{reviewDocumentsList}</p>
+                            </dd>
+
+                            <dt class="slds-dl_horizontal__label">
+                                <p class="slds-truncate slds-text-color_weak">
+                                    Regulatory Market
+                                </p>
+                            </dt>
+                            <dd class="slds-dl_horizontal__detail">
+                                <p>{reviewMarketLabel}</p>
+                            </dd>
+
+                            <dt class="slds-dl_horizontal__label">
+                                <p class="slds-truncate slds-text-color_weak">
+                                    Project Scope
+                                </p>
+                            </dt>
+                            <dd class="slds-dl_horizontal__detail">
+                                <p>{_formData.projectScope}</p>
+                            </dd>
+                        </dl>
+                    </div>
+                    <div class="slds-box slds-theme_shade slds-p-around_small">
+                        <p class="slds-text-body_small slds-text-color_weak">
+                            <lightning-icon
+                                icon-name="utility:warning"
+                                size="xx-small"
+                                class="slds-m-right_xx-small"
+                            ></lightning-icon>
+                            Please review all fields carefully before submitting. Once
+                            submitted, a request record will be created and assigned to the
+                            Regulatory Affairs team for processing. You will receive a
+                            confirmation email at the address on file.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ── FOOTER: CDA Disclaimer + Navigation Buttons ───────────────── -->
+        <div slot="footer">
+            <div class="slds-grid slds-grid_vertical-align-center slds-grid_align-spread">
+
+                <!-- CDA Disclaimer -->
+                <div class="slds-col">
+                    <p class="slds-text-body_small slds-text-color_weak">
+                        <lightning-icon
+                            icon-name="utility:lock"
+                            size="xx-small"
+                            class="slds-m-right_xx-small"
+                        ></lightning-icon>
+                        All requested documents are subject to a Confidentiality and
+                        Non-Disclosure Agreement (CDA/NDA). A valid CDA must be in place
+                        before documents can be released. Unauthorized distribution is
+                        strictly prohibited.
+                    </p>
+                </div>
+
+                <!-- Navigation Buttons (hidden on success screen) -->
+                <div if:false={isSuccess} class="slds-col slds-no-flex slds-m-left_medium">
+                    <lightning-button
+                        if:true={showPreviousButton}
+                        label="Previous"
+                        variant="neutral"
+                        onclick={handlePrevious}
+                        disabled={isSubmitting}
+                        class="slds-m-right_x-small"
+                    ></lightning-button>
+                    <lightning-button
+                        if:false={isStep4}
+                        label="Next"
+                        variant="brand"
+                        onclick={handleNext}
+                        disabled={isNextDisabled}
+                    ></lightning-button>
+                    <lightning-button
+                        if:true={isStep4}
+                        label="Submit Request"
+                        variant="brand"
+                        onclick={handleSubmit}
+                        disabled={isSubmitting}
+                    ></lightning-button>
+                </div>
+
+            </div>
+        </div>
+
+    </lightning-card>
+</template>

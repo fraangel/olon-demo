@@ -23,6 +23,18 @@ Dashboard component that monitors outstanding quotes that haven't received a cus
 
 Dashboard component that tracks documentation requests across accounts. Displays a searchable data table with columns for account, document type, request date, stage, assigned owner, and age in days. Stage colors indicate urgency based on request age. Supports view details actions, refresh, and new request creation.
 
+### 4. Documentation Request Wizard
+**`olonDocRequestWizard`**
+
+A guided 4-step wizard for submitting regulated technical documentation requests (DMF, CoA, CEP) on API products, designed for the Chemical-Pharmaceutical Community portal. 100% SLDS-compliant — no custom CSS, native Salesforce white-label look and feel.
+
+- **Step 1 — Molecule Selection**: Combobox to select the active pharmaceutical ingredient (API): Peptide Complex X, HPAPI Alpha-1, Historical Peptide Z
+- **Step 2 — Document Dossier**: Checkbox selection for Drug Master File (DMF), Certificate of Analysis (CoA), and Certificate of Suitability (CEP), each with regulatory icons
+- **Step 3 — Regulatory Details**: Picklist for target market (USA-FDA, EU-EMA, China-NMPA) and a free-text Project Scope field
+- **Step 4 — Review**: Read-only summary of all selections before submission
+- **Submit Flow**: 2-second loading spinner simulating server-side save, followed by a success screen displaying the generated request ID (`REQ-2026-084`)
+- **CDA Disclaimer**: Persistent footer on all steps reminding users of mandatory Confidentiality Agreement terms
+
 ## Project Structure
 
 ```
@@ -33,6 +45,7 @@ force-app/
         olonBioNovaRelationshipMap/    # Buyer Relationship Map
         olonDocRequestMockData/        # Mock data for Document Request Monitor
         olonDocRequestMonitor/         # Document Request Monitor
+        olonDocRequestWizard/          # Documentation Request Wizard (4-step)
         olonStaleQuotesMockData/       # Mock data for Stale Quotes Monitor
         olonStaleQuotesMonitor/        # Stale Quotes Monitor
 ```
