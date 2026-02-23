@@ -126,7 +126,7 @@
                             </div>
 
                             <!-- ── DESKTOP ACTIONS ─────────────────────── -->
-                            <div class="action-buttons-desktop slds-m-top_small">
+                            <div class="action-buttons-desktop olon-action-dark slds-m-top_small">
                                 <div class="slds-grid slds-wrap">
                                     <lightning-button
                                         label="Request Sample"
@@ -138,32 +138,24 @@
                                         class="slds-m-right_xx-small slds-m-bottom_xx-small"
                                     ></lightning-button>
                                     <lightning-button
-                                        label="Tech Call"
-                                        variant={product.techCallVariant}
-                                        icon-name="utility:video"
-                                        data-id={product.id}
-                                        data-name={product.name}
-                                        onclick={handleMeetingRequest}
-                                        class="slds-m-right_xx-small slds-m-bottom_xx-small"
-                                    ></lightning-button>
-                                    <lightning-button
                                         label="ESG Info"
                                         variant="neutral"
                                         icon-name="utility:world"
                                         data-id={product.id}
                                         data-name={product.name}
                                         onclick={handleEsgRequest}
+                                        class="slds-m-right_xx-small slds-m-bottom_xx-small"
+                                    ></lightning-button>
+                                    <lightning-button
+                                        label="Request Documents"
+                                        variant="neutral"
+                                        icon-name="utility:file"
+                                        data-id={product.id}
+                                        data-name={product.name}
+                                        onclick={handleDocRequest}
                                         class="slds-m-bottom_xx-small"
                                     ></lightning-button>
                                 </div>
-                                <lightning-button
-                                    label="Request Documents"
-                                    variant="brand"
-                                    data-id={product.id}
-                                    data-name={product.name}
-                                    onclick={handleDocRequest}
-                                    class="slds-m-top_xx-small"
-                                ></lightning-button>
                             </div>
 
                             <!-- ── MOBILE ACTIONS ──────────────────────── -->
@@ -180,11 +172,6 @@
                                         value="samplerequest"
                                         label="Request Sample"
                                         icon-name="utility:package"
-                                    ></lightning-menu-item>
-                                    <lightning-menu-item
-                                        value="meetingrequest"
-                                        label="Tech Call"
-                                        icon-name="utility:video"
                                     ></lightning-menu-item>
                                     <lightning-menu-item
                                         value="esgrequest"

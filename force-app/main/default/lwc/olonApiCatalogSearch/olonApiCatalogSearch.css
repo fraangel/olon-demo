@@ -61,6 +61,16 @@
     vertical-align: middle;
 }
 
+/* ── Dark uniform button color (all action buttons) ─────────────────────── */
+.olon-action-dark lightning-button {
+    --sds-c-button-neutral-color-background:       #1c1c1c;
+    --sds-c-button-neutral-color-background-hover: #3a3a3a;
+    --sds-c-button-neutral-color-border:           #1c1c1c;
+    --sds-c-button-neutral-color-border-hover:     #3a3a3a;
+    --sds-c-button-text-color:                     #ffffff;
+    --sds-c-button-text-color-hover:               #ffffff;
+}
+
 /* ── Responsive action area ──────────────────────────────────────────────── */
 
 /* Desktop (768px+): show button row, hide dropdown menu */

@@ -112,7 +112,6 @@ export default class OlonApiCatalogSearch extends LightningElement {
                     p.site === 'Rodano'
                         ? 'olon-site-badge olon-site-badge_rodano'
                         : 'olon-site-badge',
-                techCallVariant: p.site === 'Rodano' ? 'brand' : 'neutral',
                 regulatoryBadges: p.regulatory.map((r) => ({
                     key: r,
                     label: r,
@@ -195,17 +194,6 @@ export default class OlonApiCatalogSearch extends LightningElement {
         const { id, name } = event.currentTarget.dataset;
         this.dispatchEvent(
             new CustomEvent('samplerequest', {
-                detail: { productId: id, productName: name },
-                bubbles: true,
-                composed: true
-            })
-        );
-    }
-
-    handleMeetingRequest(event) {
-        const { id, name } = event.currentTarget.dataset;
-        this.dispatchEvent(
-            new CustomEvent('meetingrequest', {
                 detail: { productId: id, productName: name },
                 bubbles: true,
                 composed: true
