@@ -50,6 +50,16 @@ Advanced pharmaceutical product catalog for Olon's Customer Community. Enables t
 - **Empty state**: Friendly no-results panel when search/filters return zero products
 - **CDA footer**: Confidentiality reminder on all views
 
+### 6. Partner Marketing Hub
+**`olonPartnerMarketingHub`**
+
+Marketing dashboard for Olon partners and dealers to align on communication strategy and joint customer reach. 2-column responsive layout with 4 interactive sections.
+
+- **Communication Preferences**: 4 live toggles (Regulatory Updates, Product Tech Sheets, Site Availability Rodano, Sustainability Reports) that instantly update the engagement score
+- **Latest Brand Interactions**: Scrollable list of recent emails with status icons — blue for Opened (`utility:email`), green for Clicked (`utility:touch_action`), default for Sent (`utility:check`)
+- **Unreached Joint Customers**: Alert panel with red count badge listing end-customers (BioPharma Ltd, MedSynth AG, EuroChem Pharma, Aleph Biotech) who have not received the latest Regulatory Change journey
+- **Partner Engagement Score**: Live `lightning-progress-ring` (0–100) computed from active preferences (×10 each) + interaction history weights (Clicked=15, Opened=10, Sent=5). Variant switches to `base-autocomplete` (green) at score ≥75
+
 ## Project Structure
 
 ```
@@ -62,6 +72,7 @@ force-app/
         olonDocRequestMockData/        # Mock data for Document Request Monitor
         olonDocRequestMonitor/         # Document Request Monitor
         olonDocRequestWizard/          # Documentation Request Wizard (4-step)
+        olonPartnerMarketingHub/       # Partner Marketing Hub Dashboard
         olonStaleQuotesMockData/       # Mock data for Stale Quotes Monitor
         olonStaleQuotesMonitor/        # Stale Quotes Monitor
 ```

@@ -1,0 +1,30 @@
+/* ── Progress ring: centered with breathing room ─────────────────────────── */
+.olon-ring-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem 0;
+}
+
+/* ── Alert count badge (red pill for unreached customers) ────────────────── */
+.olon-alert-count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 1.5rem;
+    height: 1.5rem;
+    padding: 0 0.4rem;
+    border-radius: 0.75rem;
+    background-color: #c23934;
+    color: #ffffff;
+    font-size: 0.75rem;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+/* ── Right column top margin reset on large screens ─────────────────────── */
+@media (min-width: 1024px) {
+    .slds-large-m-top_none {
+        margin-top: 0 !important;
+    }
+}

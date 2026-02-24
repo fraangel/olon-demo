@@ -1,0 +1,211 @@
+<template>
+    <lightning-card
+        title="Partner Marketing Hub"
+        icon-name="standard:marketing_action"
+    >
+
+        <!-- ── 2-COLUMN DASHBOARD GRID ────────────────────────────────────── -->
+        <div class="slds-grid slds-wrap slds-p-around_medium">
+
+            <!-- ═══════════════════════════════════════════════════════════════
+                 LEFT COLUMN — Preferences + Brand Interactions
+            ════════════════════════════════════════════════════════════════ -->
+            <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-2 slds-p-right_medium">
+
+                <!-- ── SECTION 1: Communication Preferences ─────────────── -->
+                <div class="slds-box slds-m-bottom_medium">
+                    <div class="slds-grid slds-grid_vertical-align-center slds-m-bottom_medium">
+                        <lightning-icon
+                            icon-name="utility:settings"
+                            size="x-small"
+                            class="slds-m-right_small"
+                        ></lightning-icon>
+                        <h2 class="slds-text-heading_small">
+                            Communication Preferences
+                        </h2>
+                    </div>
+                    <p class="slds-text-body_small slds-text-color_weak slds-m-bottom_medium">
+                        Select which Olon communications you wish to receive.
+                        Your preferences affect your Partner Engagement Score.
+                    </p>
+                    <div class="slds-m-bottom_small">
+                        <lightning-input
+                            type="toggle"
+                            label="Regulatory Updates"
+                            name="regulatoryUpdates"
+                            data-key="regulatoryUpdates"
+                            checked={_preferences.regulatoryUpdates}
+                            onchange={handlePreferenceChange}
+                        ></lightning-input>
+                    </div>
+                    <div class="slds-m-bottom_small">
+                        <lightning-input
+                            type="toggle"
+                            label="Product Tech Sheets"
+                            name="productTechSheets"
+                            data-key="productTechSheets"
+                            checked={_preferences.productTechSheets}
+                            onchange={handlePreferenceChange}
+                        ></lightning-input>
+                    </div>
+                    <div class="slds-m-bottom_small">
+                        <lightning-input
+                            type="toggle"
+                            label="Site Availability (Rodano)"
+                            name="siteAvailability"
+                            data-key="siteAvailability"
+                            checked={_preferences.siteAvailability}
+                            onchange={handlePreferenceChange}
+                        ></lightning-input>
+                    </div>
+                    <div>
+                        <lightning-input
+                            type="toggle"
+                            label="Sustainability Reports"
+                            name="sustainabilityReports"
+                            data-key="sustainabilityReports"
+                            checked={_preferences.sustainabilityReports}
+                            onchange={handlePreferenceChange}
+                        ></lightning-input>
+                    </div>
+                </div>
+
+                <!-- ── SECTION 2: Latest Brand Interactions ──────────────── -->
+                <div class="slds-box">
+                    <div class="slds-grid slds-grid_vertical-align-center slds-m-bottom_medium">
+                        <lightning-icon
+                            icon-name="utility:email"
+                            size="x-small"
+                            class="slds-m-right_small"
+                        ></lightning-icon>
+                        <h2 class="slds-text-heading_small">
+                            Latest Brand Interactions
+                        </h2>
+                    </div>
+                    <template for:each={brandInteractions} for:item="item">
+                        <div
+                            key={item.id}
+                            class="slds-grid slds-grid_vertical-align-center slds-border_bottom slds-p-vertical_x-small"
+                        >
+                            <lightning-icon
+                                icon-name={item.icon}
+                                variant={item.iconVariant}
+                                size="x-small"
+                                class="slds-m-right_small"
+                            ></lightning-icon>
+                            <div class="slds-col">
+                                <p class="slds-text-body_regular">{item.subject}</p>
+                                <p class="slds-text-body_small slds-text-color_weak">
+                                    {item.status} &middot; {item.date}
+                                </p>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+
+            </div>
+
+            <!-- ═══════════════════════════════════════════════════════════════
+                 RIGHT COLUMN — Engagement Score + Customer Coverage
+            ════════════════════════════════════════════════════════════════ -->
+            <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-2 slds-m-top_medium slds-large-m-top_none">
+
+                <!-- ── SECTION 4: Partner Engagement Score ───────────────── -->
+                <div class="slds-box slds-m-bottom_medium slds-text-align_center">
+                    <div class="slds-grid slds-grid_vertical-align-center slds-grid_align-center slds-m-bottom_medium">
+                        <lightning-icon
+                            icon-name="utility:chart"
+                            size="x-small"
+                            class="slds-m-right_small"
+                        ></lightning-icon>
+                        <h2 class="slds-text-heading_small">
+                            Partner Engagement Score
+                        </h2>
+                    </div>
+                    <div class="olon-ring-wrapper">
+                        <lightning-progress-ring
+                            value={engagementScore}
+                            variant={engagementRingVariant}
+                            size="large"
+                        ></lightning-progress-ring>
+                    </div>
+                    <p class="slds-text-heading_large slds-m-top_small">
+                        {engagementScore}
+                        <span class="slds-text-body_small slds-text-color_weak">/100</span>
+                    </p>
+                    <p class="slds-text-body_regular slds-text-color_weak slds-m-top_xxx-small">
+                        {engagementScoreLabel}
+                    </p>
+                    <p class="slds-text-body_small slds-text-color_weak slds-m-top_small">
+                        Score is calculated from active communication preferences
+                        and recent brand interaction history.
+                    </p>
+                </div>
+
+                <!-- ── SECTION 3: Joint Customer Coverage Alerts ─────────── -->
+                <div class="slds-box">
+                    <div class="slds-grid slds-grid_align-spread slds-grid_vertical-align-center slds-m-bottom_medium">
+                        <div class="slds-grid slds-grid_vertical-align-center">
+                            <lightning-icon
+                                icon-name="utility:warning"
+                                variant="warning"
+                                size="x-small"
+                                class="slds-m-right_small"
+                            ></lightning-icon>
+                            <h2 class="slds-text-heading_small">
+                                Unreached Joint Customers
+                            </h2>
+                        </div>
+                        <span class="olon-alert-count">{unreachedCount}</span>
+                    </div>
+                    <p class="slds-text-body_small slds-text-color_weak slds-m-bottom_small">
+                        The following end-customers have not yet received the latest
+                        Regulatory Change journey.
+                    </p>
+                    <template for:each={unreachedCustomers} for:item="customer">
+                        <div
+                            key={customer.id}
+                            class="slds-box slds-box_x-small slds-theme_shade slds-m-bottom_x-small"
+                        >
+                            <div class="slds-grid slds-grid_vertical-align-center">
+                                <lightning-icon
+                                    icon-name="utility:user"
+                                    size="x-small"
+                                    class="slds-m-right_small"
+                                ></lightning-icon>
+                                <div class="slds-col">
+                                    <p class="slds-text-body_regular">
+                                        <strong>{customer.name}</strong>
+                                    </p>
+                                    <p class="slds-text-body_small slds-text-color_weak">
+                                        Journey: {customer.pendingJourney}
+                                        &nbsp;&mdash;&nbsp;Status: Regulatory Update Pending
+                                    </p>
+                                    <p class="slds-text-body_small slds-text-color_weak">
+                                        Area: {customer.area}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ── FOOTER ─────────────────────────────────────────────────────── -->
+        <div slot="footer">
+            <p class="slds-text-body_small slds-text-color_weak">
+                <lightning-icon
+                    icon-name="utility:lock"
+                    size="xx-small"
+                    class="slds-m-right_xx-small"
+                ></lightning-icon>
+                Data shown reflects Olon's CRM marketing records.
+                Confidential — for authorized partner use only.
+                Do not redistribute without prior written consent.
+            </p>
+        </div>
+
+    </lightning-card>
+</template>
