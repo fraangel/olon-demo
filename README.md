@@ -60,6 +60,22 @@ Marketing dashboard for Olon partners and dealers to align on communication stra
 - **Unreached Joint Customers**: Alert panel with red count badge listing end-customers (BioPharma Ltd, MedSynth AG, EuroChem Pharma, Aleph Biotech) who have not received the latest Regulatory Change journey
 - **Partner Engagement Score**: Live `lightning-progress-ring` (0–100) computed from active preferences (×10 each) + interaction history weights (Clicked=15, Opened=10, Sent=5). Variant switches to `base-autocomplete` (green) at score ≥75
 
+### 7. Community Document Vault
+**`olonCommunityDocVault`**
+
+Regulatory document library for the Olon Customer Community. Displays API/molecule regulatory documents with real-time search and multi-select category filtering. Themed entirely in Olon Blue (`#0d4b74`).
+
+- **10 mock documents** across molecules: Ibuprofen, Carbamazepine, Omeprazole, Atorvastatin, Metformin HCl, Paracetamol, Clarithromycin, Ranitidine HCl, Sertraline, Venlafaxine HCl
+- **DocCode format**: `DOC-YYYYMMDD-Molecule-Type` (e.g., `DOC-20260115-IBU-DMF`)
+- **Manufacturing sites**: Rodano, Lodi, Capua
+- **Category types**: DMF, CEP, CoA, MSDS, Technical Package — each with a distinct shade of Olon Blue as badge color
+- **Multi-select filter pills**: toggle one or more categories; active pills highlight in solid Olon Blue
+- **Real-time search**: filters on molecule name and document code simultaneously
+- **3-column responsive grid**: SLDS breakpoints (1-of-3 desktop / 1-of-2 tablet / full-width mobile)
+- **Card design**: left-border accent, hover lift with shadow (adapted from HLS-KOL-Collaboration pattern)
+- **Download PDF button**: Olon Blue fill, fires `ShowToastEvent` confirmation on click
+- **Community target**: exposed to `lightningCommunity__Page`, `lightning__AppPage`, `lightning__HomePage`
+
 ## Project Structure
 
 ```
@@ -69,6 +85,7 @@ force-app/
       lwc/
         olonApiCatalogSearch/          # API Product Catalog Search
         olonBioNovaRelationshipMap/    # Buyer Relationship Map
+        olonCommunityDocVault/         # Community Document Vault
         olonDocRequestMockData/        # Mock data for Document Request Monitor
         olonDocRequestMonitor/         # Document Request Monitor
         olonDocRequestWizard/          # Documentation Request Wizard (4-step)
