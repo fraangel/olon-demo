@@ -1,0 +1,123 @@
+<template>
+    <lightning-card title="Document Vault" icon-name="standard:file">
+
+        <!-- Header Actions: result count + clear filters -->
+        <div slot="actions" class="slds-grid slds-grid_vertical-align-center">
+            <span class="slds-text-body_small slds-text-color_weak slds-m-right_small">
+                {resultCount}
+            </span>
+            <lightning-button
+                label="Clear Filters"
+                variant="neutral"
+                icon-name="utility:clear"
+                onclick={handleClearFilters}>
+            </lightning-button>
+        </div>
+
+        <div class="slds-p-around_medium">
+
+            <!-- Search Bar -->
+            <div class="slds-m-bottom_medium">
+                <lightning-input
+                    type="search"
+                    label="Search documents"
+                    variant="label-hidden"
+                    placeholder="Search by molecule name or document code..."
+                    value={_searchTerm}
+                    onchange={handleSearchChange}>
+                </lightning-input>
+            </div>
+
+            <!-- Category Filter Pills -->
+            <div class="filter-row slds-m-bottom_medium">
+                <span class="filter-row-label">Filter by type:</span>
+                <template for:each={categoryFilters} for:item="cat">
+                    <button
+                        key={cat.value}
+                        class={cat.pillClass}
+                        data-value={cat.value}
+                        onclick={handleCategoryToggle}>
+                        {cat.label}
+                    </button>
+                </template>
+            </div>
+
+            <!-- Document Grid -->
+            <template lwc:if={hasDocuments}>
+                <div class="slds-grid slds-wrap">
+                    <template for:each={filteredDocuments} for:item="doc">
+                        <div key={doc.id} class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-3 slds-p-around_x-small">
+                            <article class="doc-card">
+
+                                <!-- Meta row: category badge + date -->
+                                <div class="doc-card-meta">
+                                    <span class={doc.categoryBadgeClass}>{doc.category}</span>
+                                    <span class="doc-date">{doc.formattedDate}</span>
+                                </div>
+
+                                <!-- Molecule Name (Title) -->
+                                <h3 class="doc-title">{doc.title}</h3>
+
+                                <!-- Document Code -->
+                                <p class="doc-code">{doc.docCode}</p>
+
+                                <!-- Manufacturing Site -->
+                                <div class="doc-site-row">
+                                    <lightning-icon
+                                        icon-name="utility:location"
+                                        size="xx-small"
+                                        class="site-icon">
+                                    </lightning-icon>
+                                    <span class="doc-site-label">{doc.site}</span>
+                                    <span class="doc-size slds-m-left_small">{doc.size}</span>
+                                </div>
+
+                                <!-- Download Button -->
+                                <div class="doc-card-footer">
+                                    <button
+                                        class="olon-download-btn"
+                                        data-id={doc.id}
+                                        data-title={doc.title}
+                                        onclick={handleDownload}>
+                                        <lightning-icon
+                                            icon-name="utility:download"
+                                            size="x-small"
+                                            class="olon-btn-icon">
+                                        </lightning-icon>
+                                        Download PDF
+                                    </button>
+                                </div>
+
+                            </article>
+                        </div>
+                    </template>
+                </div>
+            </template>
+
+            <!-- Empty State -->
+            <template lwc:else>
+                <div class="empty-state">
+                    <lightning-icon
+                        icon-name="utility:search"
+                        size="large"
+                        class="empty-icon slds-m-bottom_small">
+                    </lightning-icon>
+                    <p class="slds-text-heading_small slds-m-bottom_x-small">No documents found</p>
+                    <p class="slds-text-body_small slds-text-color_weak">
+                        Try adjusting your search or clearing the active filters.
+                    </p>
+                </div>
+            </template>
+
+        </div>
+
+        <!-- Footer -->
+        <div slot="footer">
+            <p class="slds-text-body_small slds-text-color_weak">
+                <lightning-icon icon-name="utility:lock" size="xx-small" class="slds-m-right_xx-small"></lightning-icon>
+                Document content is confidential and for authorised Olon partners only.
+            </p>
+        </div>
+
+    </lightning-card>
+</template>
