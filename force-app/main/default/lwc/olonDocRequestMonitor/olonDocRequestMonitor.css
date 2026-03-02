@@ -1,5 +1,8 @@
-/* Minimal CSS - Standard SLDS Only */
-/* Only footer link styling needed */
+/* Footer: View All link */
+:host ::slotted([slot="footer"]) {
+    text-align: center;
+    display: block;
+}
 
 a {
     color: #0070d2;

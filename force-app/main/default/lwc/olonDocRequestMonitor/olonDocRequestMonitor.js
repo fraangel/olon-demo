@@ -16,7 +16,6 @@ export default class OlonDocRequestMonitor extends LightningElement {
             label: 'Account',
             fieldName: 'accountUrl',
             type: 'url',
-            initialWidth: 160,
             sortable: true,
             typeAttributes: {
                 label: { fieldName: 'accountName' },
@@ -26,14 +25,12 @@ export default class OlonDocRequestMonitor extends LightningElement {
         {
             label: 'Type',
             fieldName: 'docType',
-            type: 'text',
-            initialWidth: 130
+            type: 'text'
         },
         {
             label: 'Date',
             fieldName: 'requestDate',
             type: 'date',
-            initialWidth: 100,
             sortable: true,
             typeAttributes: {
                 year: 'numeric',
@@ -45,7 +42,6 @@ export default class OlonDocRequestMonitor extends LightningElement {
             label: 'Stage',
             fieldName: 'stage',
             type: 'text',
-            initialWidth: 180,
             cellAttributes: {
                 class: { fieldName: 'stageClass' }
             }
@@ -53,14 +49,12 @@ export default class OlonDocRequestMonitor extends LightningElement {
         {
             label: 'Assigned To',
             fieldName: 'owner',
-            type: 'text',
-            initialWidth: 120
+            type: 'text'
         },
         {
             label: 'Age (d)',
             fieldName: 'age',
             type: 'number',
-            initialWidth: 80,
             cellAttributes: {
                 alignment: 'center'
             }

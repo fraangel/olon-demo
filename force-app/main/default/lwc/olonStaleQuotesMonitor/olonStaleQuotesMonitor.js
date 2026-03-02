@@ -16,7 +16,6 @@ export default class OlonStaleQuotesMonitor extends LightningElement {
             label: 'Account Name',
             fieldName: 'accountUrl',
             type: 'url',
-            initialWidth: 180,
             sortable: true,
             typeAttributes: {
                 label: { fieldName: 'accountName' },
@@ -26,26 +25,22 @@ export default class OlonStaleQuotesMonitor extends LightningElement {
         {
             label: 'Quote Number',
             fieldName: 'quoteNumber',
-            type: 'text',
-            initialWidth: 120
+            type: 'text'
         },
         {
             label: 'Type',
             fieldName: 'type',
-            type: 'text',
-            initialWidth: 80
+            type: 'text'
         },
         {
             label: 'Site',
             fieldName: 'manufacturingSite',
-            type: 'text',
-            initialWidth: 100
+            type: 'text'
         },
         {
             label: 'Sent Date',
             fieldName: 'sentDate',
             type: 'date',
-            initialWidth: 110,
             sortable: true,
             typeAttributes: {
                 year: 'numeric',
@@ -57,7 +52,6 @@ export default class OlonStaleQuotesMonitor extends LightningElement {
             label: 'Days Outstanding',
             fieldName: 'daysOutstanding',
             type: 'number',
-            initialWidth: 130,
             sortable: true,
             cellAttributes: {
                 alignment: 'center',
@@ -68,7 +62,6 @@ export default class OlonStaleQuotesMonitor extends LightningElement {
             label: 'Amount',
             fieldName: 'amount',
             type: 'currency',
-            initialWidth: 130,
             sortable: true,
             typeAttributes: {
                 currencyCode: 'EUR',
@@ -82,8 +75,7 @@ export default class OlonStaleQuotesMonitor extends LightningElement {
         {
             label: 'Status',
             fieldName: 'status',
-            type: 'text',
-            initialWidth: 160
+            type: 'text'
         },
         {
             type: 'action',
