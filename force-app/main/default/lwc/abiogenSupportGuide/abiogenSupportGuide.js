@@ -1,12 +1,11 @@
 import { LightningElement, api, track } from 'lwc';
-import logoUrl from '@salesforce/resourceUrl/AbiogenLogo';
 
 // ─── Checklist definitions ────────────────────────────────────────────────────
 const CHECKLIST_MAP = {
     'Logistica/Spedizioni': [
-        { id: 'sage',     label: 'Verifica stato ordine in Sage X3 (tramite integrazione MuleSoft)' },
+        { id: 'sage',     label: 'Verifica stato ordine in Sage X3' },
         { id: 'stock',    label: 'Controlla disponibilità lotti in magazzino' },
-        { id: 'credit',   label: 'Verifica presenza di fatture insolute (Blocco Credit Check)' },
+        { id: 'credit',   label: 'Verifica presenza di fatture insolute' },
         { id: 'delivery', label: 'Invia aggiornamento data consegna al Partner' },
     ],
     'Regolatorio/Documentale': [
@@ -22,7 +21,6 @@ const TAB_IDS = Object.keys(CHECKLIST_MAP);
 export default class AbiogenSupportGuide extends LightningElement {
 
     @api recordId;
-    logoUrl = logoUrl;
 
     @track tasks      = [];
     @track activeType = TAB_IDS[0];

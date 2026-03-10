@@ -32,11 +32,6 @@
     margin-bottom: 4px;
 }
 
-.guide-logo {
-    width: 80px;
-    flex-shrink: 0;
-}
-
 .guide-header-text {
     flex: 1;
     min-width: 0;
