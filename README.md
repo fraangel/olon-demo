@@ -60,7 +60,20 @@ Marketing dashboard for Olon partners and dealers to align on communication stra
 - **Unreached Joint Customers**: Alert panel with red count badge listing end-customers (BioPharma Ltd, MedSynth AG, EuroChem Pharma, Aleph Biotech) who have not received the latest Regulatory Change journey
 - **Partner Engagement Score**: Live `lightning-progress-ring` (0–100) computed from active preferences (×10 each) + interaction history weights (Clicked=15, Opened=10, Sent=5). Variant switches to `base-autocomplete` (green) at score ≥75
 
-### 7. Community Document Vault
+### 7. NDA Automation Card (Abiogen Demo)
+**`ndaAutomationCard`** + **`NDAService`** + **`NDADocumentPage`**
+
+Lead Record Page component for the Abiogen Pharma demo. Automates the generation and delivery of a Non-Disclosure Agreement PDF directly from a Salesforce Lead record, then advances the Lead through the sales path.
+
+- **Display logic**: visible only when Lead `Status = 'NDA'`; disappears automatically after advancing
+- **Preview section**: shows Company, Contact Name, and Molecule (`Olon_Molecule_Info__c`) that will appear in the document
+- **Agentforce Insight box**: styled AI analysis panel simulating Agentforce regulatory intelligence (FDA/EMA target identification)
+- **PDF generation**: Apex (`NDAService`) renders a Visualforce page (`NDADocumentPage`) with `renderAs="pdf"`, inserts the result as a `ContentVersion`, and links it to the Lead via `ContentDocumentLink` — file appears in the Lead's **Files** tab
+- **Auto-advance**: after successful PDF save, `updateRecord` moves `Status` to `'Credit check'` with no extra Apex
+- **Abiogen branding**: logo static resource (`AbiogenLogo`), red `#e30613` color scheme, legal header with Pisa address
+- **Error handling**: toast errors for missing required fields, `AuraHandledException` propagation from Apex
+
+### 8. Community Document Vault
 **`olonCommunityDocVault`**
 
 Regulatory document library for the Olon Customer Community. Displays API/molecule regulatory documents with real-time search and multi-select category filtering. Themed entirely in Olon Blue (`#0d4b74`).
@@ -83,6 +96,7 @@ force-app/
   main/
     default/
       lwc/
+        ndaAutomationCard/             # NDA Automation Card (Abiogen Demo)
         olonApiCatalogSearch/          # API Product Catalog Search
         olonBioNovaRelationshipMap/    # Buyer Relationship Map
         olonCommunityDocVault/         # Community Document Vault
@@ -92,14 +106,22 @@ force-app/
         olonPartnerMarketingHub/       # Partner Marketing Hub Dashboard
         olonStaleQuotesMockData/       # Mock data for Stale Quotes Monitor
         olonStaleQuotesMonitor/        # Stale Quotes Monitor
+      classes/
+        NDAService.cls                 # Apex: PDF generation + ContentVersion + ContentDocumentLink
+      pages/
+        NDADocumentPage.page           # Visualforce PDF template (renderAs="pdf")
+      staticresources/
+        AbiogenLogo.resource           # Abiogen Pharma PNG logo
 ```
 
 ## Tech Stack
 
 - **Salesforce Lightning Web Components (LWC)**
+- **Apex** (NDAService — `@AuraEnabled`, ContentVersion/ContentDocumentLink)
+- **Visualforce** (NDADocumentPage — PDF rendering)
 - **SLDS** (Salesforce Lightning Design System)
-- **API Version**: 62.0
-- **Data**: Static mock data (no Apex/wire calls)
+- **API Version**: 65.0
+- **Data**: Mix of static mock data and live `uiRecordApi` wire calls
 
 ## Deploy
 

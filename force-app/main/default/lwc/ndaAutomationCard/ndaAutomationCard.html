@@ -1,0 +1,60 @@
+<template>
+    <template lwc:if={showComponent}>
+        <lightning-card title="NDA Automation" icon-name="standard:contract">
+            <div class="slds-var-m-around_medium">
+
+                <!-- Preview Section -->
+                <h3 class="slds-text-heading_small slds-var-m-bottom_x-small">Dati per il documento</h3>
+                <div class="preview-section slds-var-m-bottom_medium">
+                    <div class="preview-row">
+                        <span class="preview-label">Azienda:</span>
+                        <span class="preview-value">{leadCompany}</span>
+                    </div>
+                    <div class="preview-row">
+                        <span class="preview-label">Contatto:</span>
+                        <span class="preview-value">{leadName}</span>
+                    </div>
+                    <div class="preview-row">
+                        <span class="preview-label">Molecola:</span>
+                        <span class="preview-value">{leadMolecule}</span>
+                    </div>
+                </div>
+
+                <!-- AI Insight Section -->
+                <div class="ai-insight-box slds-var-m-bottom_medium">
+                    <div class="ai-insight-header">
+                        <lightning-icon icon-name="utility:einstein" size="x-small"></lightning-icon>
+                        <span class="ai-insight-title">Agentforce Insight</span>
+                    </div>
+                    <p class="ai-insight-text">
+                        Analisi tecnica completata per la molecola Matrix-01. Documentazione Abiogen Pharma verificata. Target regolatorio identificato: USA (FDA) ed EU (EMA). Pronto per la generazione dell&apos;NDA conforme.
+                    </p>
+                </div>
+
+                <!-- Spinner durante la generazione -->
+                <template lwc:if={isLoading}>
+                    <div class="slds-var-m-vertical_medium slds-align_absolute-center">
+                        <lightning-spinner
+                            alternative-text="Generazione NDA in corso..."
+                            size="medium"
+                        ></lightning-spinner>
+                        <p class="slds-var-m-top_large slds-text-color_weak">Generazione NDA in corso...</p>
+                    </div>
+                </template>
+
+                <!-- Pulsante azione -->
+                <template lwc:else>
+                    <lightning-button
+                        label="Genera Documento NDA"
+                        variant="brand"
+                        icon-name="utility:file"
+                        icon-position="right"
+                        onclick={handleGenerateNda}
+                        class="nda-action-button"
+                    ></lightning-button>
+                </template>
+
+            </div>
+        </lightning-card>
+    </template>
+</template>

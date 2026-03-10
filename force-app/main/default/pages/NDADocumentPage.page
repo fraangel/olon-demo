@@ -1,0 +1,76 @@
+<apex:page renderAs="pdf" showHeader="false" standardStylesheets="false" applyBodyTag="false"
+           contentType="application/pdf#NDA.pdf">
+<head>
+<style>
+  body      { font-family: Arial, sans-serif; font-size: 11pt; color: #1a1a1a; margin: 40px; }
+  h1        { text-align: center; font-size: 16pt; letter-spacing: 2px;
+              border-bottom: 2px solid #e30613; padding-bottom: 8px; margin-bottom: 24px; }
+  h2        { font-size: 12pt; color: #e30613; margin-top: 24px; margin-bottom: 6px; }
+  p         { line-height: 1.6; margin: 6px 0; }
+  .meta     { color: #555; font-size: 10pt; text-align: right; margin-bottom: 8px; }
+  .parties  { background: #fff5f5; padding: 12px 16px; border-left: 3px solid #e30613; margin: 12px 0; }
+  .parties p { margin: 4px 0; }
+  .sig-wrap { margin-top: 60px; width: 100%; }
+  .sig-col  { display: inline-block; width: 45%; vertical-align: top; }
+  .sig-col:last-child { margin-left: 8%; }
+  .sig-line { border-top: 1px solid #333; margin-top: 48px; padding-top: 6px; font-size: 9pt; color: #555; }
+</style>
+</head>
+<body>
+  <apex:image url="{!URLFOR($Resource.AbiogenLogo)}"
+              width="200" style="display:block; margin-bottom:6px;"/>
+  <p class="meta">Data: {!$CurrentPage.parameters.docDate}</p>
+
+  <h1>NON-DISCLOSURE AGREEMENT</h1>
+
+  <h2>1. Parti</h2>
+  <div class="parties">
+    <p><strong>Abiogen Pharma S.p.A.</strong>, con sede legale in Via Meucci snc, 56127 Pisa (PI), Italia</p>
+    <p><strong>{!$CurrentPage.parameters.company}</strong>, rappresentata da: <strong>{!$CurrentPage.parameters.contactName}</strong></p>
+  </div>
+
+  <h2>2. Oggetto</h2>
+  <p>Le parti concordano di mantenere riservate tutte le informazioni tecniche, scientifiche e commerciali
+     relative alla molecola: <strong>{!$CurrentPage.parameters.molecule}</strong>, incluse formulazioni,
+     dati preclinici, strategie regolatorie e documentazione associata.</p>
+
+  <h2>3. Target Regolatorio</h2>
+  <p>&#8226; <strong>USA</strong>: Food and Drug Administration (FDA)</p>
+  <p>&#8226; <strong>EU</strong>: European Medicines Agency (EMA)</p>
+
+  <h2>4. Obblighi di Riservatezza</h2>
+  <p>Ciascuna parte si impegna a:</p>
+  <p>&#8226; Non divulgare a terzi le informazioni confidenziali ricevute senza previo consenso scritto dell'altra parte.</p>
+  <p>&#8226; Utilizzare le informazioni esclusivamente per le finalità previste dalla presente collaborazione.</p>
+  <p>&#8226; Adottare misure di sicurezza adeguate a proteggere le informazioni riservate.</p>
+
+  <h2>5. Eccezioni</h2>
+  <p>Gli obblighi di riservatezza non si applicano alle informazioni che: (i) sono di pubblico dominio;
+     (ii) erano già note alla parte ricevente; (iii) sono divulgate per obbligo di legge.</p>
+
+  <h2>6. Durata</h2>
+  <p>Il presente accordo ha durata di <strong>5 (cinque) anni</strong> dalla data di firma.</p>
+
+  <h2>7. Legge Applicabile e Foro Competente</h2>
+  <p>Il presente accordo è regolato dal diritto italiano. Foro competente esclusivo: <strong>Pisa</strong>.</p>
+
+  <div class="sig-wrap">
+    <div class="sig-col">
+      <div class="sig-line">
+        <strong>Abiogen Pharma S.p.A.</strong><br/>
+        Firma: _______________________<br/>
+        Nome: ________________________<br/>
+        Data: ________________________
+      </div>
+    </div>
+    <div class="sig-col">
+      <div class="sig-line">
+        <strong>{!$CurrentPage.parameters.company}</strong><br/>
+        Firma: _______________________<br/>
+        Nome: {!$CurrentPage.parameters.contactName}<br/>
+        Data: ________________________
+      </div>
+    </div>
+  </div>
+</body>
+</apex:page>
