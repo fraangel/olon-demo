@@ -10,6 +10,16 @@
             </div>
         </div>
 
+        <!-- ===== TAB SELECTOR ===== -->
+        <div class="tab-bar">
+            <template for:each={tabs} for:item="tab">
+                <button key={tab.id} class={tab.btnClass}
+                        onclick={handleTabSelect} data-id={tab.id}>
+                    {tab.label}
+                </button>
+            </template>
+        </div>
+
         <!-- ===== PROGRESS BAR ===== -->
         <div class="progress-track">
             <div class="progress-fill" style={progressStyle}></div>
@@ -19,32 +29,23 @@
             <span class="progress-pct">{progressPct}%</span>
         </div>
 
-        <!-- ===== CHECKLIST (tipo riconosciuto) ===== -->
-        <template lwc:if={hasChecklist}>
-            <ul class="task-list">
-                <template for:each={tasks} for:item="task">
-                    <li key={task.id} class={task.rowClass}>
-                        <button
-                            class={task.checkClass}
-                            onclick={handleTaskToggle}
-                            data-id={task.id}
-                            aria-label="Segna task">
-                            <template lwc:if={task.done}>
-                                <span class="check-icon">&#10003;</span>
-                            </template>
-                        </button>
-                        <span class={task.labelClass}>{task.label}</span>
-                    </li>
-                </template>
-            </ul>
-        </template>
-
-        <!-- ===== Tipo non mappato ===== -->
-        <template lwc:else>
-            <p class="no-checklist">
-                Nessuna checklist disponibile per il tipo: <strong>{caseType}</strong>
-            </p>
-        </template>
+        <!-- ===== CHECKLIST ===== -->
+        <ul class="task-list">
+            <template for:each={tasks} for:item="task">
+                <li key={task.id} class={task.rowClass}>
+                    <button
+                        class={task.checkClass}
+                        onclick={handleTaskToggle}
+                        data-id={task.id}
+                        aria-label="Segna task">
+                        <template lwc:if={task.done}>
+                            <span class="check-icon">&#10003;</span>
+                        </template>
+                    </button>
+                    <span class={task.labelClass}>{task.label}</span>
+                </li>
+            </template>
+        </ul>
 
         <!-- ===== SUCCESS STATE: tutti i task completati ===== -->
         <template lwc:if={isAllDone}>

@@ -59,6 +59,34 @@
     text-overflow: ellipsis;
 }
 
+/* ─── Tab Selector ──────────────────────────────────────────────────────────── */
+
+.tab-bar {
+    display: flex;
+    gap: 8px;
+    margin: 16px 0 0 0;
+}
+
+.tab-btn {
+    flex: 1;
+    padding: 8px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    font-family: inherit;
+    border: 1.5px solid #e0e0e0;
+    border-radius: 8px;
+    background: #fff;
+    color: #888;
+    cursor: pointer;
+    transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+}
+
+.tab-btn--active {
+    border-color: #E01B24;
+    color: #E01B24;
+    background: #fff5f5;
+}
+
 /* ─── Progress Bar ──────────────────────────────────────────────────────────── */
 
 .progress-track {

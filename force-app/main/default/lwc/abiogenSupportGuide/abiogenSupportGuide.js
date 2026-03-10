@@ -1,12 +1,5 @@
-import { LightningElement, api, wire, track } from 'lwc';
-import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
+import { LightningElement, api, track } from 'lwc';
 import logoUrl from '@salesforce/resourceUrl/AbiogenLogo';
-
-// ─── Case schema ──────────────────────────────────────────────────────────────
-import CASE_TYPE    from '@salesforce/schema/Case.Type';
-import CASE_SUBJECT from '@salesforce/schema/Case.Subject';
-
-const CASE_FIELDS = [CASE_TYPE, CASE_SUBJECT];
 
 // ─── Checklist definitions ────────────────────────────────────────────────────
 const CHECKLIST_MAP = {
@@ -24,35 +17,45 @@ const CHECKLIST_MAP = {
     ],
 };
 
+const TAB_IDS = Object.keys(CHECKLIST_MAP);
+
 export default class AbiogenSupportGuide extends LightningElement {
 
     @api recordId;
     logoUrl = logoUrl;
 
-    @track tasks = [];
+    @track tasks      = [];
+    @track activeType = TAB_IDS[0];
 
-    _caseType    = '';
-    _caseSubject = '';
+    connectedCallback() {
+        this._buildChecklist();
+    }
 
-    // ─── Wire: Case fields ────────────────────────────────────────────────────
+    // ─── Mock data ────────────────────────────────────────────────────────────
 
-    @wire(getRecord, { recordId: '$recordId', fields: CASE_FIELDS })
-    wiredCase({ data, error }) {
-        if (data) {
-            this._caseType    = getFieldValue(data, CASE_TYPE)    || '';
-            this._caseSubject = getFieldValue(data, CASE_SUBJECT) || '';
-            this._buildChecklist();
-        }
-        if (error) {
-            console.error('[abiogenSupportGuide] Errore wire Case:', error);
-        }
+    get caseSubject() {
+        return 'Richiesta documentazione — Ticket #00247';
+    }
+
+    // ─── Tab selector ─────────────────────────────────────────────────────────
+
+    get tabs() {
+        return TAB_IDS.map(id => ({
+            id,
+            label: id,
+            btnClass: id === this.activeType ? 'tab-btn tab-btn--active' : 'tab-btn',
+        }));
+    }
+
+    handleTabSelect(evt) {
+        this.activeType = evt.currentTarget.dataset.id;
+        this._buildChecklist();
     }
 
     // ─── Checklist builder ────────────────────────────────────────────────────
 
     _buildChecklist() {
-        const defs = CHECKLIST_MAP[this._caseType] || [];
-        // Preserve checked state when the wire fires again (e.g. type change)
+        const defs = CHECKLIST_MAP[this.activeType] || [];
         const prevState = Object.fromEntries(this.tasks.map(t => [t.id, t.done]));
         this.tasks = defs.map(def => ({
             ...def,
@@ -72,9 +75,6 @@ export default class AbiogenSupportGuide extends LightningElement {
 
     // ─── Getters ──────────────────────────────────────────────────────────────
 
-    get caseSubject()    { return this._caseSubject; }
-    get caseType()       { return this._caseType; }
-    get hasChecklist()   { return this.tasks.length > 0; }
     get completedCount() { return this.tasks.filter(t => t.done).length; }
     get totalCount()     { return this.tasks.length; }
     get progressPct() {
