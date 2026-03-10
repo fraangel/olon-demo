@@ -91,7 +91,23 @@ High-end redesign of the Community support form for the Abiogen Pharma demo. Sin
 - **Experience Builder**: `formTitle` `@api` property configurable by admin; targets `lightningCommunity__Page` + `lightningCommunity__Default`
 - **Responsive**: Stacked card header and reduced padding on mobile (`max-width: 600px`)
 
-### 9. NDA Automation Card (Abiogen Demo)
+### 9. Smart Checklist Operatore (Abiogen Demo)
+**`abiogenSupportGuide`**
+
+Case Record Page component per i Customer Service operator di Abiogen. Mostra una checklist operativa dinamica basata sul campo `Case.Type`, con progress bar, simulazione AI Agentforce e smart alert per task critici.
+
+- **Placement**: `lightning__RecordPage` — target `Case` object; si aggiunge tramite App Builder al layout del Case
+- **Dynamic checklists** — 2 template distinti per `Case.Type`:
+  - `Logistica/Spedizioni`: Verifica ordine Sage X3 (MuleSoft), disponibilità lotti, Credit Check *(critico)*, aggiornamento data consegna
+  - `Regolatorio/Documentale`: Listino terapeutico, CoA/Conformità, approvazione team Regolatorio *(critico)*, upload Files
+- **Progress bar**: barra rossa `#E01B24` che si riempie percentualmente al completamento dei task
+- **Circular checkboxes**: CSS-only — checked = sfondo rosso Abiogen; label con `text-decoration: line-through` soft
+- **Smart Alert**: banner rosso persistente quando task critici non sono completati — avverte l'operatore prima della chiusura
+- **Analisi AI (Agentforce)**: pulsante outline rosso — simula 1.5s di analisi, poi auto-spunta i task `aiSolvable=true` (Sage X3, disponibilità lotti, CoA, listino terapeutico)
+- **Success state**: banner verde "Checklist completata! Il Case è pronto per la chiusura" con animazione `fadeSlideIn`
+- **Design**: card bianca `border-radius: 20px`, Quicksand font, CSS-only spinner, no Apex richiesto
+
+### 10. NDA Automation Card (Abiogen Demo)
 **`ndaAutomationCard`** + **`NDAService`** + **`NDADocumentPage`**
 
 Lead Record Page component for the Abiogen Pharma demo. Automates the generation and delivery of a Non-Disclosure Agreement PDF directly from a Salesforce Lead record, then advances the Lead through the sales path.
@@ -128,6 +144,7 @@ force-app/
     default/
       lwc/
         abiogenCommunitySupportForm/   # Community Support Form (Abiogen Demo)
+        abiogenSupportGuide/           # Smart Checklist Operatore — Case Record Page (Abiogen Demo)
         abiogenSupportHub/             # Partner Support Hub — high-end redesign (Abiogen Demo)
         ndaAutomationCard/             # NDA Automation Card (Abiogen Demo)
         olonApiCatalogSearch/          # API Product Catalog Search
