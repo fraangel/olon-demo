@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>65.0</apiVersion>
+    <isExposed>true</isExposed>
+    <targets>
+        <target>lightningCommunity__Page</target>
+        <target>lightningCommunity__Default</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightningCommunity__Default">
+            <property
+                name="formTitle"
+                type="String"
+                label="Titolo del Form"
+                description="Titolo visualizzato nell'header del componente (default: Partner Support Center)"
+                default="Partner Support Center"
+            />
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

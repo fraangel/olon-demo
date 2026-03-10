@@ -74,7 +74,24 @@ Experience Cloud support ticket form for the Abiogen Pharma demo. Creates a Sale
 - **Experience Builder**: `formTitle` property configurable by admin; targets `lightningCommunity__Page` + `lightningCommunity__Default`
 - **Responsive**: single-column layout on mobile (`max-width: 640px`)
 
-### 8. NDA Automation Card (Abiogen Demo)
+### 8. Partner Support Hub (Abiogen Demo)
+**`abiogenSupportHub`**
+
+High-end redesign of the Community support form for the Abiogen Pharma demo. Single glass card, floating Material Design labels, smart welcome banner, and dynamic submit button. Creates a Salesforce Case via `createRecord`.
+
+- **Layout**: Single centered glass card — `background: rgba(255,255,255,0.96)`, `backdrop-filter: blur(16px)`, `border-radius: 24px`, `max-width: 680px`; Quicksand font
+- **Floating labels**: Native `<input placeholder=" ">` + CSS-only Material Design effect (`input:not(:placeholder-shown) ~ label` + `input:focus ~ label`)
+- **Welcome banner**: Shown only for logged-in users — greets by first name, confirms pre-filled data
+- **Smart pre-fill**: `@wire(getRecord)` on User fields (Name, Email, Phone, ContactId, **AccountId**) — pre-fills and disables contact fields when authenticated
+- **Dynamic submit button**: Grey and inactive until Subject + Email are filled; turns Abiogen red `#E01B24` with hover lift and ✈ icon animation
+- **Case creation**: `createRecord` on `Case` — authenticated: sets `ContactId` + `AccountId`; guest: sets `SuppliedName/Email/Phone`; always sets `Origin='Web'`, `Status='New'`, `Type='Other'`
+- **Loading state**: CSS-only spinner (`border-top-color: #E01B24`, `@keyframes spin`) — no SLDS dependency
+- **Success state**: Animated checkmark circle (red, `popIn` keyframe), SLA copy "Feedback garantito entro 72 ore", reset button
+- **Error handling**: Inline red banner (no toast — LWR-compatible)
+- **Experience Builder**: `formTitle` `@api` property configurable by admin; targets `lightningCommunity__Page` + `lightningCommunity__Default`
+- **Responsive**: Stacked card header and reduced padding on mobile (`max-width: 600px`)
+
+### 9. NDA Automation Card (Abiogen Demo)
 **`ndaAutomationCard`** + **`NDAService`** + **`NDADocumentPage`**
 
 Lead Record Page component for the Abiogen Pharma demo. Automates the generation and delivery of a Non-Disclosure Agreement PDF directly from a Salesforce Lead record, then advances the Lead through the sales path.
@@ -111,6 +128,7 @@ force-app/
     default/
       lwc/
         abiogenCommunitySupportForm/   # Community Support Form (Abiogen Demo)
+        abiogenSupportHub/             # Partner Support Hub — high-end redesign (Abiogen Demo)
         ndaAutomationCard/             # NDA Automation Card (Abiogen Demo)
         olonApiCatalogSearch/          # API Product Catalog Search
         olonBioNovaRelationshipMap/    # Buyer Relationship Map

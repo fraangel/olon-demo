@@ -1,0 +1,131 @@
+<template>
+    <div class="hub-wrapper">
+        <div class="support-card">
+
+            <!-- ===== HEADER: Logo + Titolo ===== -->
+            <div class="card-header">
+                <img src={logoUrl} alt="Abiogen Pharma" class="card-logo" />
+                <div class="header-text">
+                    <h1 class="card-title">Partner Support Center</h1>
+                    <p class="card-slogan">
+                        Siamo al fianco dei nostri partner internazionali per garantire l&apos;eccellenza
+                        operativa e la continuità distributiva dei nostri listini terapeutici.
+                    </p>
+                </div>
+            </div>
+
+            <!-- ===== WELCOME BANNER (solo utenti loggati) ===== -->
+            <template lwc:if={isLoggedIn}>
+                <div class="welcome-banner">
+                    <span class="welcome-icon">&#128075;</span>
+                    <span>
+                        Bentornato, <strong>{firstName}</strong>.
+                        Abbiamo già pre-compilato i tuoi dati aziendali per farti risparmiare tempo.
+                    </span>
+                </div>
+            </template>
+
+            <div class="card-divider"></div>
+
+            <!-- ===== STATO SUCCESSO ===== -->
+            <template lwc:if={isSuccess}>
+                <div class="success-box">
+                    <div class="success-icon-wrap">&#10003;</div>
+                    <h2 class="success-title">Richiesta inviata!</h2>
+                    <p class="success-text">
+                        Grazie! Il tuo ticket è stato preso in carico.<br/>
+                        Un nostro esperto ti risponderà a breve.
+                    </p>
+                    <p class="sla-text">&#9200; Feedback garantito entro 72 ore.</p>
+                    <button class="btn-reset" onclick={handleReset}>Apri un altro ticket</button>
+                </div>
+            </template>
+
+            <!-- ===== STATO FORM ===== -->
+            <template lwc:else>
+                <div class="form-body">
+
+                    <!-- Oggetto -->
+                    <div class="float-field">
+                        <input id="hub-subject" type="text" placeholder=" "
+                               class="float-input"
+                               oninput={handleSubjectInput} />
+                        <label for="hub-subject" class="float-label">Oggetto *</label>
+                        <span class="float-bar"></span>
+                    </div>
+
+                    <!-- Descrizione -->
+                    <div class="float-field float-field--textarea">
+                        <textarea id="hub-description" placeholder=" " rows="4"
+                                  class="float-input float-textarea"
+                                  oninput={handleDescriptionInput}></textarea>
+                        <label for="hub-description" class="float-label">Descrizione</label>
+                        <span class="float-bar"></span>
+                    </div>
+
+                    <!-- Nome e Cognome -->
+                    <div class="float-field">
+                        <input id="hub-name" type="text" placeholder=" "
+                               class={nameInputClass}
+                               value={name}
+                               disabled={isLoggedIn}
+                               oninput={handleNameInput} />
+                        <label for="hub-name" class="float-label">Nome e Cognome</label>
+                        <span class="float-bar"></span>
+                    </div>
+
+                    <!-- Email -->
+                    <div class="float-field">
+                        <input id="hub-email" type="email" placeholder=" "
+                               class={emailInputClass}
+                               value={email}
+                               disabled={isLoggedIn}
+                               oninput={handleEmailInput} />
+                        <label for="hub-email" class="float-label">Email *</label>
+                        <span class="float-bar"></span>
+                    </div>
+
+                    <!-- Telefono -->
+                    <div class="float-field">
+                        <input id="hub-phone" type="tel" placeholder=" "
+                               class={phoneInputClass}
+                               value={phone}
+                               disabled={isLoggedIn}
+                               oninput={handlePhoneInput} />
+                        <label for="hub-phone" class="float-label">Telefono</label>
+                        <span class="float-bar"></span>
+                    </div>
+
+                    <!-- Errore inline -->
+                    <template lwc:if={errorMessage}>
+                        <div class="error-banner">
+                            <span class="error-icon">&#9888;</span>
+                            <span>{errorMessage}</span>
+                        </div>
+                    </template>
+
+                    <!-- SLA note -->
+                    <p class="sla-note">&#9200; Feedback garantito entro 72 ore.</p>
+
+                    <!-- Spinner / Pulsante -->
+                    <template lwc:if={isLoading}>
+                        <div class="loading-row">
+                            <div class="spinner-ring"></div>
+                            <span class="loading-label">Invio in corso...</span>
+                        </div>
+                    </template>
+                    <template lwc:else>
+                        <button class={submitBtnClass} onclick={handleSubmit}>
+                            Invia Richiesta
+                            <template lwc:if={isFormReady}>
+                                <span class="btn-icon">&#9992;</span>
+                            </template>
+                        </button>
+                    </template>
+
+                </div>
+            </template>
+
+        </div>
+    </div>
+</template>
