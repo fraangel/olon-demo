@@ -33,12 +33,7 @@
                                 <span class="check-icon">&#10003;</span>
                             </template>
                         </button>
-                        <span class={task.labelClass}>
-                            {task.label}
-                            <template lwc:if={task.critical}>
-                                <span class="critical-badge">&#9888; Critico</span>
-                            </template>
-                        </span>
+                        <span class={task.labelClass}>{task.label}</span>
                     </li>
                 </template>
             </ul>
@@ -51,14 +46,6 @@
             </p>
         </template>
 
-        <!-- ===== SMART ALERT: task critici non completati ===== -->
-        <template lwc:if={showCriticalAlert}>
-            <div class="critical-alert">
-                <span class="alert-icon">&#9888;</span>
-                <span>Attenzione: completare i task critici prima di chiudere il Case.</span>
-            </div>
-        </template>
-
         <!-- ===== SUCCESS STATE: tutti i task completati ===== -->
         <template lwc:if={isAllDone}>
             <div class="done-banner">
@@ -66,21 +53,6 @@
                 Checklist completata! Il Case è pronto per la chiusura.
             </div>
         </template>
-
-        <!-- ===== FOOTER: Pulsante AI / Spinner ===== -->
-        <div class="guide-footer">
-            <template lwc:if={isAiLoading}>
-                <div class="loading-row">
-                    <div class="spinner-ring"></div>
-                    <span class="loading-label">Agentforce sta analizzando il record...</span>
-                </div>
-            </template>
-            <template lwc:else>
-                <button class="btn-ai" onclick={handleAiAnalyze}>
-                    <span class="ai-icon">&#10024;</span> Analisi AI
-                </button>
-            </template>
-        </div>
 
     </div>
 </template>

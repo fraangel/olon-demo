@@ -94,18 +94,16 @@ High-end redesign of the Community support form for the Abiogen Pharma demo. Sin
 ### 9. Smart Checklist Operatore (Abiogen Demo)
 **`abiogenSupportGuide`**
 
-Case Record Page component per i Customer Service operator di Abiogen. Mostra una checklist operativa dinamica basata sul campo `Case.Type`, con progress bar, simulazione AI Agentforce e smart alert per task critici.
+Case Record Page component per i Customer Service operator di Abiogen. Checklist operativa statica e interattiva basata sul campo `Case.Type`, con progress bar animata e success state.
 
 - **Placement**: `lightning__RecordPage` — target `Case` object; si aggiunge tramite App Builder al layout del Case
 - **Dynamic checklists** — 2 template distinti per `Case.Type`:
-  - `Logistica/Spedizioni`: Verifica ordine Sage X3 (MuleSoft), disponibilità lotti, Credit Check *(critico)*, aggiornamento data consegna
-  - `Regolatorio/Documentale`: Listino terapeutico, CoA/Conformità, approvazione team Regolatorio *(critico)*, upload Files
-- **Progress bar**: barra rossa `#E01B24` che si riempie percentualmente al completamento dei task
-- **Circular checkboxes**: CSS-only — checked = sfondo rosso Abiogen; label con `text-decoration: line-through` soft
-- **Smart Alert**: banner rosso persistente quando task critici non sono completati — avverte l'operatore prima della chiusura
-- **Analisi AI (Agentforce)**: pulsante outline rosso — simula 1.5s di analisi, poi auto-spunta i task `aiSolvable=true` (Sage X3, disponibilità lotti, CoA, listino terapeutico)
+  - `Logistica/Spedizioni`: Verifica ordine Sage X3 (MuleSoft), disponibilità lotti, Blocco Credit Check, aggiornamento data consegna
+  - `Regolatorio/Documentale`: Listino terapeutico, CoA/Conformità, approvazione team Regolatorio, upload Files
+- **Progress bar**: barra rossa `#E01B24` con `transition: width 0.4s` che si riempie al completamento dei task
+- **Circular checkboxes**: CSS-only — checked = sfondo rosso Abiogen; label con `text-decoration: line-through` soft e `opacity: 0.65`
 - **Success state**: banner verde "Checklist completata! Il Case è pronto per la chiusura" con animazione `fadeSlideIn`
-- **Design**: card bianca `border-radius: 20px`, Quicksand font, CSS-only spinner, no Apex richiesto
+- **Design**: card bianca `border-radius: 20px`, Quicksand font, no Apex richiesto
 
 ### 10. NDA Automation Card (Abiogen Demo)
 **`ndaAutomationCard`** + **`NDAService`** + **`NDADocumentPage`**
