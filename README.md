@@ -60,7 +60,21 @@ Marketing dashboard for Olon partners and dealers to align on communication stra
 - **Unreached Joint Customers**: Alert panel with red count badge listing end-customers (BioPharma Ltd, MedSynth AG, EuroChem Pharma, Aleph Biotech) who have not received the latest Regulatory Change journey
 - **Partner Engagement Score**: Live `lightning-progress-ring` (0–100) computed from active preferences (×10 each) + interaction history weights (Clicked=15, Opened=10, Sent=5). Variant switches to `base-autocomplete` (green) at score ≥75
 
-### 7. NDA Automation Card (Abiogen Demo)
+### 7. Community Support Form (Abiogen Demo)
+**`abiogenCommunitySupportForm`**
+
+Experience Cloud support ticket form for the Abiogen Pharma demo. Creates a Salesforce Case directly via `createRecord` with smart pre-fill for authenticated Community users and full guest support.
+
+- **Layout**: Two-column CSS grid — left blue brand panel (`#003399`) with Abiogen logo + "Supporto Tecnico & Logistico" headline; right white form panel with Quicksand font
+- **Fields**: Oggetto (Subject), Descrizione (Description), Nome, Email, Telefono
+- **Smart pre-fill**: `@wire(getRecord)` on User fields (Name, Email, Phone, ContactId) — pre-fills and disables contact fields when user is logged in (`@salesforce/user/isGuest`)
+- **Case creation**: `createRecord` on `Case` object — authenticated users: sets `ContactId` (AccountId resolved automatically); guest users: sets `SuppliedName`, `SuppliedEmail`, `SuppliedPhone`; always sets `Origin='Web'`, `Status='New'`
+- **Validation**: inline error messages (no toast — compatible with LWR sites)
+- **Success state**: hides form, shows confirmation message + "Apri un altro ticket" reset button
+- **Experience Builder**: `formTitle` property configurable by admin; targets `lightningCommunity__Page` + `lightningCommunity__Default`
+- **Responsive**: single-column layout on mobile (`max-width: 640px`)
+
+### 8. NDA Automation Card (Abiogen Demo)
 **`ndaAutomationCard`** + **`NDAService`** + **`NDADocumentPage`**
 
 Lead Record Page component for the Abiogen Pharma demo. Automates the generation and delivery of a Non-Disclosure Agreement PDF directly from a Salesforce Lead record, then advances the Lead through the sales path.
@@ -96,6 +110,7 @@ force-app/
   main/
     default/
       lwc/
+        abiogenCommunitySupportForm/   # Community Support Form (Abiogen Demo)
         ndaAutomationCard/             # NDA Automation Card (Abiogen Demo)
         olonApiCatalogSearch/          # API Product Catalog Search
         olonBioNovaRelationshipMap/    # Buyer Relationship Map

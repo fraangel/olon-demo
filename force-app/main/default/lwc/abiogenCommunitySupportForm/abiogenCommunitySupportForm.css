@@ -1,0 +1,156 @@
+/*
+ * Per abilitare il font Quicksand, aggiungere in Experience Builder
+ * → Settings → Advanced → Head Markup:
+ * <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+ */
+
+/* ─── Container principale ─────────────────────────────────────────────── */
+.support-container {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    min-height: 500px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.12);
+    font-family: 'Quicksand', 'Salesforce Sans', Arial, sans-serif;
+}
+
+/* ─── Brand Panel (colonna sinistra) ───────────────────────────────────── */
+.brand-panel {
+    background-color: #003399;
+    padding: 40px 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    color: #ffffff;
+}
+
+.brand-logo {
+    width: 160px;
+    margin-bottom: 32px;
+    filter: brightness(0) invert(1); /* rende il logo bianco su sfondo blu */
+}
+
+.brand-title {
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1.35;
+    margin: 0 0 12px 0;
+    color: #ffffff;
+}
+
+.brand-subtitle {
+    font-size: 13px;
+    line-height: 1.7;
+    opacity: 0.88;
+    margin: 0;
+    color: #ffffff;
+}
+
+/* ─── Form Panel (colonna destra) ──────────────────────────────────────── */
+.form-panel {
+    background: #ffffff;
+    padding: 40px 36px;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-title {
+    font-size: 19px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0 0 20px 0;
+}
+
+/* Badge utente loggato */
+.logged-in-badge {
+    display: flex;
+    align-items: center;
+    background-color: #f0f4ff;
+    border: 1px solid #c9d9ff;
+    border-radius: 4px;
+    padding: 6px 12px;
+    font-size: 12px;
+    color: #003399;
+    font-weight: 600;
+}
+
+/* Gruppi campo */
+.field-group {
+    margin-bottom: 14px;
+}
+
+/* Messaggio errore inline */
+.error-msg {
+    color: #c23934;
+    font-size: 13px;
+    font-weight: 600;
+    margin: 4px 0 8px 0;
+    padding: 8px 12px;
+    background-color: #fff5f5;
+    border-left: 3px solid #c23934;
+    border-radius: 2px;
+}
+
+/* Area azione */
+.action-area {
+    display: flex;
+    align-items: center;
+}
+
+.submit-button {
+    display: block;
+}
+
+/* Spinner wrapper */
+.spinner-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 8px 0;
+}
+
+.spinner-label {
+    font-size: 13px;
+    color: #3e3e3c;
+}
+
+/* ─── Success Box ──────────────────────────────────────────────────────── */
+.success-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 48px 24px;
+    flex: 1;
+}
+
+.success-text {
+    font-size: 15px;
+    color: #3e3e3c;
+    line-height: 1.7;
+    margin: 20px 0 28px 0;
+    max-width: 340px;
+}
+
+/* ─── Responsive: singola colonna su mobile ────────────────────────────── */
+@media (max-width: 640px) {
+    .support-container {
+        grid-template-columns: 1fr;
+        border-radius: 6px;
+    }
+
+    .brand-panel {
+        padding: 28px 24px;
+    }
+
+    .brand-logo {
+        width: 130px;
+        margin-bottom: 20px;
+    }
+
+    .form-panel {
+        padding: 28px 24px;
+    }
+}

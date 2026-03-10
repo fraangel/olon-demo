@@ -1,0 +1,143 @@
+<template>
+    <div class="support-container">
+
+        <!-- ===== COLONNA SINISTRA: Brand Panel ===== -->
+        <div class="brand-panel">
+            <img src={logoUrl} alt="Abiogen Pharma" class="brand-logo" />
+            <h2 class="brand-title">Supporto Tecnico &amp; Logistico</h2>
+            <p class="brand-subtitle">
+                Il nostro team è a tua disposizione per qualsiasi esigenza tecnica o logistica
+                relativa ai tuoi prodotti API.
+            </p>
+            <p class="brand-subtitle slds-var-m-top_medium">
+                Tempo di risposta medio: <strong>24–48 ore lavorative</strong>.
+            </p>
+        </div>
+
+        <!-- ===== COLONNA DESTRA: Form / Success ===== -->
+        <div class="form-panel">
+
+            <!-- STATO SUCCESSO -->
+            <template lwc:if={isSuccess}>
+                <div class="success-box">
+                    <lightning-icon
+                        icon-name="utility:success"
+                        variant="success"
+                        size="large"
+                    ></lightning-icon>
+                    <p class="success-text">
+                        Grazie! Il tuo ticket è stato preso in carico.<br/>
+                        Un nostro esperto ti risponderà a breve.
+                    </p>
+                    <lightning-button
+                        label="Apri un altro ticket"
+                        variant="brand"
+                        onclick={handleReset}
+                    ></lightning-button>
+                </div>
+            </template>
+
+            <!-- STATO FORM -->
+            <template lwc:else>
+                <h3 class="form-title">{formTitle}</h3>
+
+                <!-- Badge utente loggato -->
+                <template lwc:if={isLoggedIn}>
+                    <div class="logged-in-badge slds-var-m-bottom_medium">
+                        <lightning-icon icon-name="utility:user" size="x-small" class="slds-var-m-right_x-small"></lightning-icon>
+                        <span>Accesso effettuato — i tuoi dati sono stati pre-compilati</span>
+                    </div>
+                </template>
+
+                <!-- Oggetto -->
+                <div class="field-group">
+                    <lightning-input
+                        label="Oggetto"
+                        value={subject}
+                        onchange={handleSubjectChange}
+                        required
+                        placeholder="Es. Richiesta documentazione CoA, Problema spedizione..."
+                    ></lightning-input>
+                </div>
+
+                <!-- Descrizione -->
+                <div class="field-group">
+                    <lightning-textarea
+                        label="Descrizione"
+                        value={description}
+                        onchange={handleDescriptionChange}
+                        required
+                        placeholder="Descrivi il tuo problema o la tua richiesta nel dettaglio..."
+                        max-length="2000"
+                    ></lightning-textarea>
+                </div>
+
+                <!-- Nome -->
+                <div class="field-group">
+                    <lightning-input
+                        label="Nome e Cognome"
+                        value={name}
+                        onchange={handleNameChange}
+                        disabled={isLoggedIn}
+                        placeholder="Mario Rossi"
+                    ></lightning-input>
+                </div>
+
+                <!-- Email -->
+                <div class="field-group">
+                    <lightning-input
+                        label="Email"
+                        type="email"
+                        value={email}
+                        onchange={handleEmailChange}
+                        disabled={isLoggedIn}
+                        required
+                        placeholder="mario.rossi@azienda.com"
+                    ></lightning-input>
+                </div>
+
+                <!-- Telefono -->
+                <div class="field-group">
+                    <lightning-input
+                        label="Telefono"
+                        type="tel"
+                        value={phone}
+                        onchange={handlePhoneChange}
+                        disabled={isLoggedIn}
+                        placeholder="+39 02 1234567"
+                    ></lightning-input>
+                </div>
+
+                <!-- Messaggio errore inline -->
+                <template lwc:if={errorMessage}>
+                    <p class="error-msg">{errorMessage}</p>
+                </template>
+
+                <!-- Spinner / Pulsante -->
+                <div class="action-area slds-var-m-top_medium">
+                    <template lwc:if={isLoading}>
+                        <div class="spinner-wrapper">
+                            <lightning-spinner
+                                alternative-text="Invio in corso..."
+                                size="small"
+                            ></lightning-spinner>
+                            <span class="spinner-label">Invio in corso...</span>
+                        </div>
+                    </template>
+                    <template lwc:else>
+                        <lightning-button
+                            label="Invia Richiesta"
+                            variant="brand"
+                            icon-name="utility:send"
+                            icon-position="right"
+                            onclick={handleSubmit}
+                            class="submit-button"
+                        ></lightning-button>
+                    </template>
+                </div>
+
+            </template>
+        </div>
+
+    </div>
+</template>
